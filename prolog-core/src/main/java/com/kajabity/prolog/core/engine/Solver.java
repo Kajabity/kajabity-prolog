@@ -1,35 +1,19 @@
 /*
- *******************************************************************************
- *  Copyright   :(c) 2003 Williams Technologies Limited
+ * Copyright (c) 2003-2025 Simon J. Williams
  *
- *  Project     :   Java Prolog
- * Created on 16-Mar-2003
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *  $Header: /home/cvs/cvs/java-prolog/src/engine/uk/co/williams_technologies/prolog/solver/Solver.java,v 1.13 2004/05/05 05:28:38 simon Exp $
- *******************************************************************************
- *  $Log: Solver.java,v $
- *  Revision 1.13  2004/05/05 05:28:38  simon
- *  Lots of changes...
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Revision 1.12  2004/02/17 08:35:44  simon
- *  Refactoring and adding Processor classes.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  *
- *  Revision 1.11  2004/01/15 07:10:49  simon
- *  refactoring and arithmetic implementation.
  *
- *  Revision 1.10  2003/11/11 04:49:16  simon
- *  Starting Visual front end, adding logging.
- *
- *  Revision 1.9  2003/07/07 03:39:20  simon
- *  List handling improved.  First built-ins working.  Cut works!
- *
- *  Revision 1.8  2003/07/03 03:47:00  simon
- *  Fixes (not complete) to List handling.
- *
- *  Revision 1.7  2003/06/28 05:38:35  simon
- *  UPdate during adding of 'op' builtin.
- *
- *******************************************************************************
  */
 package com.kajabity.prolog.core.engine;
 

@@ -1,28 +1,19 @@
 /*
- *******************************************************************************
- *  Copyright   :(c) 2003 Williams Technologies Limited
+ * Copyright (c) 2003-2025 Simon J. Williams
  *
- *  Project     :   Java Prolog
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Created on 16-Mar-2003
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- *  $Header: /home/cvs/cvs/java-prolog/src/engine/uk/co/williams_technologies/prolog/solver/Goal.java,v 1.7 2004/05/05 05:28:38 simon Exp $
- *******************************************************************************
- *  $Log: Goal.java,v $
- *  Revision 1.7  2004/05/05 05:28:38  simon
- *  Lots of changes...
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  *
- *  Revision 1.6  2003/11/20 05:14:29  simon
- *  Changes to implement write( Term ) built-in - added PrologOutputStream,
- *  also refactored to src/* folders.
  *
- *  Revision 1.5  2003/07/07 03:39:21  simon
- *  List handling improved.  First built-ins working.  Cut works!
- *
- *  Revision 1.4  2003/06/28 05:38:35  simon
- *  UPdate during adding of 'op' builtin.
- *
- *******************************************************************************
  */
 
 package com.kajabity.prolog.core.engine;

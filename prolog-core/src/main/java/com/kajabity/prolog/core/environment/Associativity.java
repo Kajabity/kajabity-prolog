@@ -1,27 +1,19 @@
 /*
- *******************************************************************************
- *  Copyright   :(c) 2003 Williams Technologies Limited
+ * Copyright (c) 2003-2025 Simon J. Williams
  *
- *  Project     :   Java Prolog
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *  Created on 16-Mar-2003
- *  $Header: /home/cvs/cvs/Prolog/Environment/src/uk/co/williams_technologies/prolog/environment/Associativity.java,v 1.1.1.1 2004/05/05 05:19:26 simon Exp $
- *******************************************************************************
- *  $Log: Associativity.java,v $
- *  Revision 1.1.1.1  2004/05/05 05:19:26  simon
- *  Import into CVS for sharing across computers.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Revision 1.1  2003/11/22 04:12:26  simon
- *  Added basic arithmetic functionality - still need to implement functions, operators and predicats
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  *
- *  Revision 1.2  2003/11/20 05:14:29  simon
- *  Changes to implement write( Term ) built-in - added PrologOutputStream,
- *  also refactored to src/* folders.
  *
- *  Revision 1.1  2003/06/28 05:38:35  simon
- *  UPdate during adding of 'op' builtin.
- *
- *******************************************************************************
  */
 package com.kajabity.prolog.core.environment;
 
