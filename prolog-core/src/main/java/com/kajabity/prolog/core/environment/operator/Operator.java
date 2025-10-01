@@ -17,31 +17,27 @@
  */
 package com.kajabity.prolog.core.environment.operator;
 
-import java.util.Stack;
-
 import com.kajabity.prolog.core.environment.Associativity;
 import com.kajabity.prolog.core.expression.Expression;
 
-
+import java.util.Stack;
 
 
 /**
  * DOCUMENT ME!
  *
  * @author Simon To change the template for this generated type comment go to
- *         Window - Preferences - Java - Code Generation - Code and Comments
+ * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public abstract class Operator implements Comparable<Operator>
-{
-    private String        name;
+public abstract class Operator implements Comparable<Operator> {
+    private final String name;
 
     private Associativity associativity;
 
-    private int           precedence;
+    private int precedence;
 
 
-    public Operator( String name, Associativity associativity, int precedence )
-    {
+    public Operator(String name, Associativity associativity, int precedence) {
         this.name = name;
         this.associativity = associativity;
         this.precedence = precedence;
@@ -53,7 +49,7 @@ public abstract class Operator implements Comparable<Operator>
      *
      * @return DOCUMENT ME!
      */
-    public abstract Expression apply( Stack<Expression> values )
+    public abstract Expression apply(Stack<Expression> values)
             throws PrologOperatorException;
 
 
@@ -67,12 +63,11 @@ public abstract class Operator implements Comparable<Operator>
      * @return true if the objects have the same key(name and position).
      * @see Object#equals(Object)
      */
-    public boolean equals( Object obj )
-    {
+    public boolean equals(Object obj) {
         return obj instanceof Operator
-                && name.equals( ((Operator) obj).name )
+                && name.equals(((Operator) obj).name)
                 && associativity.getDirection().equals(
-                        ((Operator) obj).associativity.getDirection() );
+                ((Operator) obj).associativity.getDirection());
     }
 
 
@@ -82,8 +77,7 @@ public abstract class Operator implements Comparable<Operator>
      *
      * @see Object#hashCode()
      */
-    public int hashCode()
-    {
+    public int hashCode() {
         return name.hashCode() + associativity.getDirection().hashCode();
     }
 
@@ -93,8 +87,7 @@ public abstract class Operator implements Comparable<Operator>
      *
      * @return a string representing this instance of an operator.
      */
-    public String toString()
-    {
+    public String toString() {
         return "op( " + getPrecedence() + ", "
                 + getAssociativity() + ", " + getName() + " )";
     }
@@ -105,16 +98,15 @@ public abstract class Operator implements Comparable<Operator>
      *
      * @see Comparable#compareTo(Object)
      */
-    public int compareTo( Operator other )
-    {
-        if( precedence > other.precedence )
+    public int compareTo(Operator other) {
+        if (precedence > other.precedence)
             return 1;
 
-        if( precedence < other.precedence )
+        if (precedence < other.precedence)
             return -1;
 
         return -associativity.getDirection().compareTo(
-                other.associativity.getDirection() );
+                other.associativity.getDirection());
     }
 
 
@@ -123,8 +115,7 @@ public abstract class Operator implements Comparable<Operator>
      *
      * @return Returns the associativity.
      */
-    public Associativity getAssociativity()
-    {
+    public Associativity getAssociativity() {
         return associativity;
     }
 
@@ -135,15 +126,13 @@ public abstract class Operator implements Comparable<Operator>
      * @param associativity The associativity to set.
      * @throws PrologOperatorException DOCUMENT ME!
      */
-    public void setAssociativity( Associativity associativity )
-            throws PrologOperatorException
-    {
-        if( this.associativity.getPosition() != associativity.getPosition() )
-        {
+    public void setAssociativity(Associativity associativity)
+            throws PrologOperatorException {
+        if (this.associativity.getPosition() != associativity.getPosition()) {
             throw new PrologOperatorException(
                     "Attempt to change operator position from "
                             + this.associativity.getPosition() + " to "
-                            + associativity.getPosition() );
+                            + associativity.getPosition());
         }
 
         this.associativity = associativity;
@@ -155,8 +144,7 @@ public abstract class Operator implements Comparable<Operator>
      *
      * @return Returns the precedence.
      */
-    public int getPrecedence()
-    {
+    public int getPrecedence() {
         return precedence;
     }
 
@@ -166,8 +154,7 @@ public abstract class Operator implements Comparable<Operator>
      *
      * @param precedence The precedence to set.
      */
-    public void setPrecedence( int precedence )
-    {
+    public void setPrecedence(int precedence) {
         //TODO: Check the range 1..1200
         this.precedence = precedence;
     }
@@ -178,8 +165,7 @@ public abstract class Operator implements Comparable<Operator>
      *
      * @return Returns the name.
      */
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 }

@@ -17,8 +17,8 @@
  */
 package com.kajabity.prolog.io.parse.action;
 
+import com.kajabity.prolog.builtin.operator.Operators;
 import com.kajabity.prolog.core.environment.PrologException;
-import com.kajabity.prolog.core.environment.operator.Operators;
 import com.kajabity.prolog.io.parse.PrologParser;
 
 

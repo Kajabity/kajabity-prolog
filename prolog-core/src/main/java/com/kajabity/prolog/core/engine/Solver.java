@@ -17,38 +17,32 @@
  */
 package com.kajabity.prolog.core.engine;
 
+import com.kajabity.prolog.core.environment.*;
+import com.kajabity.prolog.core.expression.Expression;
+import com.kajabity.prolog.core.expression.Term;
+import com.kajabity.prolog.core.expression.Variable;
+import com.kajabity.utils.token.TokenException;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
-import com.kajabity.prolog.core.environment.Clause;
-import com.kajabity.prolog.core.environment.IConsortIterator;
-import com.kajabity.prolog.core.environment.PrologContext;
-import com.kajabity.prolog.core.environment.PrologException;
-import com.kajabity.prolog.core.environment.Relation;
-import com.kajabity.prolog.core.expression.Expression;
-import com.kajabity.prolog.core.expression.Term;
-import com.kajabity.prolog.core.expression.Variable;
-import com.kajabity.utils.token.TokenException;
-
 /**
  * DOCUMENT ME!
  *
  * @author Simon
  */
-public class Solver
-{
-    private final static Logger logger = Logger.getLogger( Solver.class );
+public class Solver {
+    private final static Logger logger = Logger.getLogger(Solver.class);
 
-    private PrologContext            database;
+    private final PrologContext database;
 
-    private Goal                top;
+    private final Goal top;
 
-    private Goal                lastGoal;
+    private Goal lastGoal;
 
 
     /**
@@ -56,16 +50,15 @@ public class Solver
      * the 'database'.
      *
      * @param database a database of assertions to test the goal against.
-     * @param terms a list of terms to be solved.
+     * @param terms    a list of terms to be solved.
      */
-    public Solver( PrologContext database, Expression terms )
-    {
+    public Solver(PrologContext database, Expression terms) {
         this.database = database;
 
-        top = new Goal( null );
+        top = new Goal(null);
         Map<String, Variable> variables = new HashMap<String, Variable>();
-        top.setChildren( terms.makeCopy( variables ) );
-        top.setVariables( variables );
+        top.setChildren(terms.makeCopy(variables));
+        top.setVariables(variables);
         lastGoal = (Goal) top.depthNext();
     }
 
@@ -80,23 +73,20 @@ public class Solver
      * @throws ParseException
      */
     public boolean hasSolution() throws TokenException, IOException,
-            PrologException
-    {
+            PrologException {
         //  Start from where we left off.
         Goal goal = lastGoal;
 
         boolean success = true;
 
         //  Repeat until there are no more goals to satisfy - success.
-        while( goal != null )
-        {
-            logger.debug( "Solver: goal " + goal.getTerm() );
+        while (goal != null) {
+            logger.debug("Solver: goal " + goal.getTerm());
 
             Term term = goal.getTerm();
             List<Variable> substitutions;
 
-            if( term == null )
-            {
+            if (term == null) {
                 //	Empty goal - we have reached the root in backtracking =>
                 // FAIL.
                 success = false;
@@ -108,52 +98,42 @@ public class Solver
             // goal has a term
             IConsortIterator consortIterator = goal.getConsortIterator();
 
-            if( consortIterator == null )
-            {
+            if (consortIterator == null) {
                 //	Always start the Goal afresh.
-                Relation relation = database.findRelation( term );
+                Relation relation = database.findRelation(term);
 
-                if( relation == null )
-                {
-                    throw new NoRelationException( "No relation for term "
-                            + term + "(" + term.getKey() + ")" );
+                if (relation == null) {
+                    throw new NoRelationException("No relation for term "
+                            + term + "(" + term.getKey() + ")");
                 }
 
-                consortIterator = relation.getConsortIterator( goal );
-                goal.setConsortIterator( consortIterator );
+                consortIterator = relation.getConsortIterator(goal);
+                goal.setConsortIterator(consortIterator);
             }//end if consortIterator = null
 
             substitutions = consortIterator.hasNext();
 
-            if( substitutions == null )
-            {
+            if (substitutions == null) {
                 // Backtrack.
-                do
-                {
+                do {
                     goal = (Goal) goal.depthPrev();
                     lastGoal = null;
 
-                    if( goal == null )
-                    {
+                    if (goal == null) {
                         success = false;
-                    }
-                    else
-                    {
+                    } else {
                         goal.reset();
                     }
-                } while( goal != null && goal.isCut() );
-            }
-            else
-            {
+                } while (goal != null && goal.isCut());
+            } else {
                 //  Add the substitutions to the Goal - so they can
                 // be undone later.
-                goal.setSubstitutions( substitutions );
+                goal.setSubstitutions(substitutions);
 
                 Clause clause = consortIterator.getClause();
-                if( clause.getTail() != null )
-                {
-                    goal.setChildren( clause.getTail().makeCopy(
-                            goal.getVariables() ) );
+                if (clause.getTail() != null) {
+                    goal.setChildren(clause.getTail().makeCopy(
+                            goal.getVariables()));
                 }
 
                 //  Go on to the next goal.
@@ -171,14 +151,12 @@ public class Solver
      *
      * @return
      */
-    public Goal getTop()
-    {
+    public Goal getTop() {
         return top;
     }
 
 
-    public class NoRelationException extends PrologException
-    {
+    public class NoRelationException extends PrologException {
 
         /**
          *
@@ -189,8 +167,7 @@ public class Solver
         /**
          *
          */
-        public NoRelationException()
-        {
+        public NoRelationException() {
             super();
             // TODO Auto-generated constructor stub
         }
@@ -199,9 +176,8 @@ public class Solver
         /**
          * @param message
          */
-        public NoRelationException( String message )
-        {
-            super( message );
+        public NoRelationException(String message) {
+            super(message);
             // TODO Auto-generated constructor stub
         }
 
@@ -210,9 +186,8 @@ public class Solver
          * @param message
          * @param cause
          */
-        public NoRelationException( String message, Throwable cause )
-        {
-            super( message, cause );
+        public NoRelationException(String message, Throwable cause) {
+            super(message, cause);
             // TODO Auto-generated constructor stub
         }
 
@@ -220,9 +195,8 @@ public class Solver
         /**
          * @param cause
          */
-        public NoRelationException( Throwable cause )
-        {
-            super( cause );
+        public NoRelationException(Throwable cause) {
+            super(cause);
             // TODO Auto-generated constructor stub
         }
     }

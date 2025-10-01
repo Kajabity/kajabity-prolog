@@ -18,21 +18,18 @@
 
 package com.kajabity.prolog.core.environment;
 
-import java.io.IOException;
-import java.util.List;
-
-
-
 import com.kajabity.prolog.core.engine.Goal;
 import com.kajabity.prolog.core.expression.Variable;
 import com.kajabity.utils.token.TokenException;
 
+import java.io.IOException;
+import java.util.List;
+
 /**
  * @author Simon To change the template for this generated type comment go to
- *         Window - Preferences - Java - Code Generation - Code and Comments
+ * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public abstract class GroundLiteral extends Relation
-{
+public abstract class GroundLiteral extends Relation {
     protected Database database;
 
 
@@ -40,9 +37,8 @@ public abstract class GroundLiteral extends Relation
      * @param name
      * @param arity
      */
-    public GroundLiteral( Database database, String name, int arity )
-    {
-        super( name, arity );
+    public GroundLiteral(Database database, String name, int arity) {
+        super(name, arity);
 
         this.database = database;
     }
@@ -51,8 +47,7 @@ public abstract class GroundLiteral extends Relation
     /**
      * @see com.kajabity.prolog.core.environment.Relation#isBuiltIn()
      */
-    public boolean isGroundLiteral()
-    {
+    public boolean isGroundLiteral() {
         return true;
     }
 
@@ -65,15 +60,14 @@ public abstract class GroundLiteral extends Relation
      * @throws IOException
      * @throws TokenException
      */
-    protected abstract List<Variable> execute( Goal goal ) throws TokenException,
+    protected abstract List<Variable> execute(Goal goal) throws TokenException,
             IOException, PrologException;
 
 
     /**
      * @return Returns the dynamic.
      */
-    public boolean isDynamic()
-    {
+    public boolean isDynamic() {
         return false;
     }
 
@@ -81,21 +75,34 @@ public abstract class GroundLiteral extends Relation
     /**
      * @param dynamic The dynamic to set.
      */
-    public void setDynamic( boolean dynamic )
-    {
+    public void setDynamic(boolean dynamic) {
         throw new UnsupportedOperationException(
-                "setDynamic is not implemented for GroundLiterals" );
+                "setDynamic is not implemented for GroundLiterals");
     }
 
+    /**
+     * @see com.kajabity.prolog.core.environment.Relation#getConsortIterator(Goal)
+     */
+    public IConsortIterator getConsortIterator(Goal goal) {
+        // TODO Auto-generated method stub
+        return new BuiltInConsortIterator(goal);
+    }
 
-    protected class BuiltInConsortIterator implements IConsortIterator
-    {
+    public void add(Clause clause) throws PrologException {
+        throw new PrologException("Relation " + getName()
+                + " is a GroundLiteral and is not Dynamic.");
+    }
+
+    public void insert(int index, Clause clause) throws PrologException {
+        throw new PrologException("Relation " + getName()
+                + " is a GroundLiteral and is not Dynamic.");
+    }
+
+    protected class BuiltInConsortIterator implements IConsortIterator {
+        Goal goal;
         private boolean first = true;
 
-        Goal            goal;
-
-        BuiltInConsortIterator( Goal goal )
-        {
+        BuiltInConsortIterator(Goal goal) {
             this.goal = goal;
         }
 
@@ -111,12 +118,10 @@ public abstract class GroundLiteral extends Relation
          * @see com.kajabity.prolog.core.environment.IConsortIterator#hasNext()
          */
         public List<Variable> hasNext() throws TokenException, IOException,
-                PrologException
-        {
-            if( first )
-            {
+                PrologException {
+            if (first) {
                 first = false;
-                return execute( goal );
+                return execute(goal);
             }
 
             return null;
@@ -126,34 +131,9 @@ public abstract class GroundLiteral extends Relation
         /**
          * @see com.kajabity.prolog.core.environment.IConsortIterator#getClause()
          */
-        public Clause getClause()
-        {
-            return new Clause( null, null );
+        public Clause getClause() {
+            return new Clause(null, null);
         }
 
-    }
-
-
-    /**
-     * @see com.kajabity.prolog.core.environment.Relation#getConsortIterator(Goal)
-     */
-    public IConsortIterator getConsortIterator( Goal goal )
-    {
-        // TODO Auto-generated method stub
-        return new BuiltInConsortIterator( goal );
-    }
-
-
-    public void add( Clause clause ) throws PrologException
-    {
-        throw new PrologException( "Relation " + getName()
-                + " is a GroundLiteral and is not Dynamic." );
-    }
-
-
-    public void insert( int index, Clause clause ) throws PrologException
-    {
-        throw new PrologException( "Relation " + getName()
-                + " is a GroundLiteral and is not Dynamic." );
     }
 }

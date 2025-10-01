@@ -92,7 +92,8 @@ local.properties
 # Compiled class file
 *.class
 
-# Log file
+# Log files and folder.
+logs/
 *.log
 
 # BlueJ files

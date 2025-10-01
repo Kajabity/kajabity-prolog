@@ -75,7 +75,7 @@ public class Console
         parser = new PrologParser( database );
 
 
-        URL initialiseUrl = getClass().getResource( "/initialise.pro" );
+        URL initialiseUrl = getClass().getResource("/initialise.pl");
         if( initialiseUrl == null )
         {
             logger.warn( "Failed to find initialisation file." );

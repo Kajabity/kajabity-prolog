@@ -21,16 +21,15 @@
  */
 package com.kajabity.prolog.core.arithmetic;
 
-import java.util.Iterator;
-import java.util.Stack;
-
-import org.apache.log4j.Logger;
-
 import com.kajabity.prolog.core.environment.PrologContext;
 import com.kajabity.prolog.core.expression.Atom;
 import com.kajabity.prolog.core.expression.Expression;
 import com.kajabity.prolog.core.expression.NumericConstant;
 import com.kajabity.prolog.core.expression.Tuple;
+import org.apache.log4j.Logger;
+
+import java.util.Iterator;
+import java.util.Stack;
 
 
 /**
@@ -41,13 +40,14 @@ import com.kajabity.prolog.core.expression.Tuple;
  *
  * @author simon
  */
-public class ArithmeticExpression
-{
+public class ArithmeticExpression {
     private final static Logger logger = Logger
-                                               .getLogger( ArithmeticExpression.class );
+            .getLogger(ArithmeticExpression.class);
 
-    /** The expression to be evaluated as an arithmetic expression. */
-    private Expression          expr;
+    /**
+     * The expression to be evaluated as an arithmetic expression.
+     */
+    private final Expression expr;
 
 
     /**
@@ -55,85 +55,71 @@ public class ArithmeticExpression
      *
      * @param expression The expression to be evaluated.
      */
-    public ArithmeticExpression( Expression expression )
-    {
+    public ArithmeticExpression(Expression expression) {
         this.expr = expression;
-        logger.debug( "Constructed ArithmeticExpression for: " + expression );
+        logger.debug("Constructed ArithmeticExpression for: " + expression);
     }
 
 
     /**
      * Evaluate the arithmetic expression to produce a numeric answer.
+     *
      * @param database evaluate in the context of this prolog Database.
      * @return the result of evaluating the arithmetic expression.
      * @throws PrologArithmeticException
      */
-    public NumericConstant eval( PrologContext database )
-            throws PrologArithmeticException
-    {
+    public NumericConstant eval(PrologContext database)
+            throws PrologArithmeticException {
         NumericConstant value = null;
 
-        Stack<Expression> exec = toExecutionStack( database );
+        Stack<Expression> exec = toExecutionStack(database);
 
-        if( logger.isDebugEnabled() )
-        {
-            logger.debug( "Execute: " );
+        if (logger.isDebugEnabled()) {
+            logger.debug("Execute: ");
 
             Iterator<Expression> iExec = exec.iterator();
 
-            while( iExec.hasNext() )
-            {
-                logger.debug( iExec.next() + ", " );
+            while (iExec.hasNext()) {
+                logger.debug(iExec.next() + ", ");
             }
         }
 
         Stack<NumericConstant> values = new Stack<NumericConstant>();
         Function evaluator;
 
-        do
-        {
+        do {
             Expression ex = exec.pop();
             value = null;
 
-            if( ex instanceof NumericConstant )
-            {
+            if (ex instanceof NumericConstant) {
                 value = (NumericConstant) ex;
-            }
-            else if( ex instanceof Atom )
-            {
+            } else if (ex instanceof Atom) {
                 //  Look for name/0 as evaluator (e.g. defined constants like
                 // pi).
-                evaluator = database.findFunction( ((Atom) ex).getName(), 0 );
+                evaluator = database.findFunction(((Atom) ex).getName(), 0);
 
-                if( evaluator != null )
-                {
-                    value = evaluator.evaluate( values );
+                if (evaluator != null) {
+                    value = evaluator.evaluate(values);
                 }
-            }
-            else if( ex instanceof Tuple )
-            {
+            } else if (ex instanceof Tuple) {
                 //  Get the name/arity evaluator then add each of the parameters
                 //  to the todo stack.
                 Tuple s = (Tuple) ex;
-                evaluator = database.findFunction( s.getName(), s.getArity() );
+                evaluator = database.findFunction(s.getName(), s.getArity());
 
-                if( evaluator != null )
-                {
-                    value = evaluator.evaluate( values );
+                if (evaluator != null) {
+                    value = evaluator.evaluate(values);
                 }
             }
 
-            if( value != null )
-            {
-                values.push( value );
-            }
-            else
-            {
+            if (value != null) {
+                values.push(value);
+            } else {
                 throw new PrologArithmeticException(
-                        "Invalid Arithmetic Expression: " + ex );
+                        "Invalid Arithmetic Expression: " + ex);
             }
         }
-        while( !exec.isEmpty() );
+        while (!exec.isEmpty());
 
         //TODO Don't rely on just returning the last element. Review.
         return value;
@@ -148,28 +134,24 @@ public class ArithmeticExpression
      * @param database DOCUMENT ME!
      * @return
      */
-    private Stack<Expression> toExecutionStack( PrologContext database )
-    {
+    private Stack<Expression> toExecutionStack(PrologContext database) {
         Stack<Expression> exec = new Stack<Expression>();
         Stack<Expression> todo = new Stack<Expression>();
 
         // Seed the conversion with the top level expression.
-        todo.push( expr.getFinalInstantiation() );
+        todo.push(expr.getFinalInstantiation());
 
-        while( !todo.isEmpty() )
-        {
+        while (!todo.isEmpty()) {
             Expression ex = todo.pop();
-            exec.push( ex );
+            exec.push(ex);
 
-            if( ex instanceof Tuple )
-            {
+            if (ex instanceof Tuple) {
                 Tuple tuple = (Tuple) ex;
                 Iterator<Expression> iArgs = tuple.getArgs().getTerms().iterator();
 
-                while( iArgs.hasNext() )
-                {
-                    todo.push( ((Expression) iArgs.next())
-                            .getFinalInstantiation() );
+                while (iArgs.hasNext()) {
+                    todo.push(iArgs.next()
+                            .getFinalInstantiation());
                 }
             }
         }

@@ -20,6 +20,10 @@ package com.kajabity.prolog.io.predicate;
 
 import java.io.IOException;
 
+import com.kajabity.prolog.builtin.processor.AssertProcessor;
+import com.kajabity.prolog.builtin.processor.FactProcessor;
+import com.kajabity.prolog.builtin.processor.ListDatabaseProcessor;
+import com.kajabity.prolog.builtin.processor.QuitProcessor;
 import junit.framework.TestCase;
 
 import com.kajabity.prolog.core.environment.Associativity;
@@ -27,7 +31,7 @@ import com.kajabity.prolog.core.environment.Database;
 import com.kajabity.prolog.core.environment.Processor;
 import com.kajabity.prolog.core.environment.PrologException;
 import com.kajabity.prolog.core.environment.Relation;
-import com.kajabity.prolog.core.environment.operator.SimpleOperator;
+import com.kajabity.prolog.builtin.operator.SimpleOperator;
 import com.kajabity.prolog.core.expression.Expression;
 import com.kajabity.prolog.core.expression.Term;
 import com.kajabity.prolog.io.format.PrologFormat;

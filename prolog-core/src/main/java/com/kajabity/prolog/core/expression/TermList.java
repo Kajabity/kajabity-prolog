@@ -17,12 +17,7 @@
  */
 package com.kajabity.prolog.core.expression;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * A TermList is a list of terms (obviously) usually created by a comma (and)
@@ -30,8 +25,7 @@ import java.util.Map;
  *
  * @author Simon
  */
-public final class TermList implements Expression
-{
+public final class TermList implements Expression {
     /**
      * The actual terms are stored in a List. The first must be a Term, the rest
      * can be Terms or TermLists.
@@ -47,11 +41,10 @@ public final class TermList implements Expression
      * @param term
      * @param expr
      */
-    public TermList( final Expression expr1, final Expression expr2 )
-    {
-        terms = new ArrayList<Expression>( 2 );
-        terms.add( expr1 );
-        terms.add( expr2 );
+    public TermList(final Expression expr1, final Expression expr2) {
+        terms = new ArrayList<Expression>(2);
+        terms.add(expr1);
+        terms.add(expr2);
     }
 
     /**
@@ -59,10 +52,9 @@ public final class TermList implements Expression
      *
      * @param term
      */
-    public TermList( final Expression expr )
-    {
-        terms = new ArrayList<Expression>( 1 );
-        terms.add( expr );
+    public TermList(final Expression expr) {
+        terms = new ArrayList<Expression>(1);
+        terms.add(expr);
     }
 
     /**
@@ -71,9 +63,8 @@ public final class TermList implements Expression
      *
      * @param terms
      */
-    public TermList( Expression[] terms )
-    {
-        this.terms = Arrays.asList( terms );
+    public TermList(Expression[] terms) {
+        this.terms = Arrays.asList(terms);
     }
 
     /**
@@ -81,22 +72,40 @@ public final class TermList implements Expression
      *
      * @param terms
      */
-    public TermList( final List<Expression> exprs )
-    {
-        this.terms = new ArrayList<Expression>( exprs );
+    public TermList(final List<Expression> exprs) {
+        this.terms = new ArrayList<Expression>(exprs);
+    }
+
+    /**
+     * @author Simon To change the template for this generated type comment go
+     * to Window - Preferences - Java - Code Generation - Code and
+     * Comments
+     */
+    public static TermList concatenate(Expression left, Expression right) {
+        List<Expression> terms = new ArrayList<Expression>();
+        if (left.isTerm()) {
+            terms.add(left);
+        } else {
+            terms.addAll(((TermList) left).terms);
+        }
+
+        if (right.isTerm()) {
+            terms.add(right);
+        } else {
+            terms.addAll(((TermList) right).terms);
+        }
+
+        return new TermList(terms);
     }
 
     /**
      * @see Expression#containsVariable(Variable)
      */
-    public boolean containsVariable( final Variable variable )
-    {
+    public boolean containsVariable(final Variable variable) {
         Iterator<Expression> iTerms = terms.iterator();
 
-        while( iTerms.hasNext() )
-        {
-            if( iTerms.next().containsVariable( variable ) )
-            {
+        while (iTerms.hasNext()) {
+            if (iTerms.next().containsVariable(variable)) {
                 return true;
             }
         }
@@ -109,32 +118,27 @@ public final class TermList implements Expression
      *
      * @return
      */
-    public Expression getHead()
-    {
-        if( terms.isEmpty() )
-        {
+    public Expression getHead() {
+        if (terms.isEmpty()) {
             return null;
         }
 
-        return terms.get( 0 );
+        return terms.get(0);
     }
 
-    public TermList getTail()
-    {
-        if( terms.size() < 2 )
-        {
+    public TermList getTail() {
+        if (terms.size() < 2) {
             return null;
         }
 
-        return new TermList( terms.subList( 1, terms.size() - 1 ) );
+        return new TermList(terms.subList(1, terms.size() - 1));
     }
 
     /**
      * @see Expression#append(Expression)
      */
-    public TermList append( final Expression expr )
-    {
-        terms.add( expr );
+    public TermList append(final Expression expr) {
+        terms.add(expr);
 
         return this;
     }
@@ -144,25 +148,22 @@ public final class TermList implements Expression
      *
      * @return
      */
-    public int size()
-    {
+    public int size() {
         return terms.size();
     }
 
     /**
      * @see Expression#makeCopy(Map)
      */
-    public Expression makeCopy( Map<String, Variable> variables )
-    {
-        List<Expression> copyTerms = new ArrayList<Expression>( terms.size() );
+    public Expression makeCopy(Map<String, Variable> variables) {
+        List<Expression> copyTerms = new ArrayList<Expression>(terms.size());
         Iterator<Expression> iTerms = terms.iterator();
 
-        while( iTerms.hasNext() )
-        {
-            copyTerms.add( iTerms.next().makeCopy( variables ) );
+        while (iTerms.hasNext()) {
+            copyTerms.add(iTerms.next().makeCopy(variables));
         }
 
-        return new TermList( copyTerms );
+        return new TermList(copyTerms);
     }
 
     /**
@@ -170,11 +171,9 @@ public final class TermList implements Expression
      *
      * @see Object#equals(Object)
      */
-    public boolean equals( Object obj )
-    {
-        if( obj instanceof TermList )
-        {
-            return terms.equals( ((TermList) obj).terms );
+    public boolean equals(Object obj) {
+        if (obj instanceof TermList) {
+            return terms.equals(((TermList) obj).terms);
         }
 
         return false;
@@ -183,29 +182,23 @@ public final class TermList implements Expression
     /**
      * @see Object#toString()
      */
-    public String toString()
-    {
+    public String toString() {
         StringBuffer buf = new StringBuffer();
 
         Iterator<Expression> iTerms = terms.iterator();
 
-        while( iTerms.hasNext() )
-        {
+        while (iTerms.hasNext()) {
             Expression term = iTerms.next();
-            if( term.isTerm() )
-            {
-                buf.append( term );
-            }
-            else
-            {
-                buf.append( "(" );
-                buf.append( term );
-                buf.append( ")" );
+            if (term.isTerm()) {
+                buf.append(term);
+            } else {
+                buf.append("(");
+                buf.append(term);
+                buf.append(")");
             }
 
-            if( iTerms.hasNext() )
-            {
-                buf.append( ", " );
+            if (iTerms.hasNext()) {
+                buf.append(", ");
             }
         }
 
@@ -215,53 +208,21 @@ public final class TermList implements Expression
     /**
      * @see Expression#getFinalInstantiation()
      */
-    public Expression getFinalInstantiation()
-    {
+    public Expression getFinalInstantiation() {
         return this;
     }
 
     /**
      * @see Expression#isTerm()
      */
-    public boolean isTerm()
-    {
+    public boolean isTerm() {
         return false;
     }
 
     /**
      * @return Returns the terms.
      */
-    public List<Expression> getTerms()
-    {
-        return Collections.unmodifiableList( terms );
-    }
-
-    /**
-     * @author Simon To change the template for this generated type comment go
-     *         to Window - Preferences - Java - Code Generation - Code and
-     *         Comments
-     */
-    public static TermList concatenate( Expression left, Expression right )
-    {
-        List<Expression> terms = new ArrayList<Expression>();
-        if( left.isTerm() )
-        {
-            terms.add( left );
-        }
-        else
-        {
-            terms.addAll( ((TermList) left).terms );
-        }
-
-        if( right.isTerm() )
-        {
-            terms.add( right );
-        }
-        else
-        {
-            terms.addAll( ((TermList) right).terms );
-        }
-
-        return new TermList( terms );
+    public List<Expression> getTerms() {
+        return Collections.unmodifiableList(terms);
     }
 }

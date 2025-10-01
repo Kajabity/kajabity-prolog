@@ -18,40 +18,35 @@
 
 package com.kajabity.prolog.core.environment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.kajabity.prolog.core.engine.Goal;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * @author Simon To change the template for this generated type comment go to
- *         Window - Preferences - Java - Code Generation - Code and Comments
+ * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class DynamicRelation extends Relation
-{
-    private List<Clause>    assertions = new ArrayList<Clause>();
+public class DynamicRelation extends Relation {
+    private final List<Clause> assertions = new ArrayList<Clause>();
 
-    private boolean dynamic    = true;
+    private boolean dynamic = true;
 
 
     /**
      * @param name
      * @param arity
      */
-    public DynamicRelation( String name, int arity )
-    {
-        super( name, arity );
+    public DynamicRelation(String name, int arity) {
+        super(name, arity);
     }
 
 
     /**
      * @see com.kajabity.prolog.core.environment.Relation#isBuiltIn()
      */
-    public boolean isGroundLiteral()
-    {
+    public boolean isGroundLiteral() {
         return false;
     }
 
@@ -59,17 +54,15 @@ public class DynamicRelation extends Relation
     /**
      * @see com.kajabity.prolog.core.environment.Relation#getConsortIterator(com.kajabity.prolog.core.expression.Term)
      */
-    public IConsortIterator getConsortIterator( Goal goal )
-    {
-        return new DynamicConsortIterator( assertions, goal );
+    public IConsortIterator getConsortIterator(Goal goal) {
+        return new DynamicConsortIterator(assertions, goal);
     }
 
 
     /**
      * @see com.kajabity.prolog.core.environment.Relation#isDynamic()
      */
-    public boolean isDynamic()
-    {
+    public boolean isDynamic() {
         return dynamic;
     }
 
@@ -78,8 +71,7 @@ public class DynamicRelation extends Relation
      *
      * @see com.kajabity.prolog.core.environment.Relation#setDynamic(boolean)
      */
-    public void setDynamic( boolean dynamic )
-    {
+    public void setDynamic(boolean dynamic) {
         this.dynamic = dynamic;
     }
 
@@ -88,15 +80,11 @@ public class DynamicRelation extends Relation
      * @throws PrologException
      * @see com.kajabity.prolog.core.environment.Relation#add(com.kajabity.prolog.core.environment.Clause)
      */
-    public void add( Clause clause ) throws PrologException
-    {
-        if( dynamic )
-        {
-            this.assertions.add( clause );
-        }
-        else
-        {
-            throw new PrologException( "Relation " + getName() + " is not Dynamic." );
+    public void add(Clause clause) throws PrologException {
+        if (dynamic) {
+            this.assertions.add(clause);
+        } else {
+            throw new PrologException("Relation " + getName() + " is not Dynamic.");
         }
     }
 
@@ -107,15 +95,11 @@ public class DynamicRelation extends Relation
      * @see com.kajabity.prolog.core.environment.Relation#insert(int,
      *      com.kajabity.prolog.core.environment.Clause)
      */
-    public void insert( int index, Clause clause ) throws PrologException
-    {
-        if( dynamic )
-        {
-            this.assertions.add( index, clause );
-        }
-        else
-        {
-            throw new PrologException( "Relation " + getName() + " is not Dynamic." );
+    public void insert(int index, Clause clause) throws PrologException {
+        if (dynamic) {
+            this.assertions.add(index, clause);
+        } else {
+            throw new PrologException("Relation " + getName() + " is not Dynamic.");
         }
     }
 }

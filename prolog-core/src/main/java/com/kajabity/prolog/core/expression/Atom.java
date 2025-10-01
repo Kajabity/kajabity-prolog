@@ -30,43 +30,40 @@ import java.util.WeakHashMap;
  *
  * @author Simon J. Williams
  */
-public final class Atom extends Term
-{
-    /** A map of all atoms created - they are immutable and so can be shared. */
-    private final static Map<String, Atom> _cache     = new WeakHashMap<String, Atom>();
+public final class Atom extends Term {
+    /**
+     * A map of all atoms created - they are immutable and so can be shared.
+     */
+    private final static Map<String, Atom> _cache = new WeakHashMap<String, Atom>();
 
-    /** A mapping of property names to their values for each atom. */
-    private Map<Object, Object>              properties = null;
+    /**
+     * A mapping of property names to their values for each atom.
+     */
+    private Map<Object, Object> properties = null;
 
     /**
      * Privately construct an atom only when not already available in the
      * _cache.
      *
-     * @param name
-     *            The display name of the Atom.
+     * @param name The display name of the Atom.
      */
-    private Atom( String name )
-    {
-        super( TAG_ATOM, name, 0 );
+    private Atom(String name) {
+        super(TAG_ATOM, name, 0);
     }
 
     /**
      * Atoms are immutable so we can ensure there is only one instance of each
      * atom name.
      *
-     * @param name
-     *            the string name of the atom (unquoted).
-     *
+     * @param name the string name of the atom (unquoted).
      * @return a new or existing atom with the given name.
      */
-    public static Atom find( String name )
-    {
-        Atom atom = _cache.get( name );
+    public static Atom find(String name) {
+        Atom atom = _cache.get(name);
 
-        if( atom == null )
-        {
-            atom = new Atom( name );
-            _cache.put( name, atom );
+        if (atom == null) {
+            atom = new Atom(name);
+            _cache.put(name, atom);
         }
 
         return atom;
@@ -76,16 +73,12 @@ public final class Atom extends Term
      * Look for and return a property stored against this atom using a key value
      * provided. If the key is not found, the result is null.
      *
-     * @param key
-     *            The key to look for in the Atom property map.
-     *
+     * @param key The key to look for in the Atom property map.
      * @return the object stored against the key - or null if none is found.
      */
-    public Object getProperty( Object key )
-    {
-        if( properties != null )
-        {
-            return properties.get( key );
+    public Object getProperty(Object key) {
+        if (properties != null) {
+            return properties.get(key);
         }
 
         return null;
@@ -95,19 +88,15 @@ public final class Atom extends Term
      * Save a property to the atom using the given key value. The property map
      * will be created if this is the first property stored on the atom.
      *
-     * @param key
-     *            The key used to retrieve the property when it is required.
-     * @param value
-     *            The value stored for the given key.
+     * @param key   The key used to retrieve the property when it is required.
+     * @param value The value stored for the given key.
      */
-    public void setProperty( Object key, Object value )
-    {
-        if( properties == null )
-        {
+    public void setProperty(Object key, Object value) {
+        if (properties == null) {
             properties = new HashMap<Object, Object>();
         }
 
-        properties.put( key, value );
+        properties.put(key, value);
     }
 
     /**
@@ -115,8 +104,7 @@ public final class Atom extends Term
      *
      * @return A string representation of the atom - it's name.
      */
-    public String toString()
-    {
+    public String toString() {
         return name;
     }
 }

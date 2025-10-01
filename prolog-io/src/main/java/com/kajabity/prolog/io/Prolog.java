@@ -22,6 +22,8 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.URL;
 
+import com.kajabity.prolog.builtin.InitialiseBuiltins;
+import com.kajabity.prolog.builtin.predicate.DebugShowGoalTreeAtom;
 import org.apache.log4j.Logger;
 
 import com.kajabity.prolog.core.environment.Associativity;
@@ -29,18 +31,18 @@ import com.kajabity.prolog.core.environment.Database;
 import com.kajabity.prolog.core.environment.Processor;
 import com.kajabity.prolog.core.environment.PrologException;
 import com.kajabity.prolog.core.environment.operator.PrologOperatorException;
-import com.kajabity.prolog.core.environment.operator.SimpleOperator;
+import com.kajabity.prolog.builtin.operator.SimpleOperator;
 import com.kajabity.prolog.core.expression.Expression;
 import com.kajabity.prolog.core.expression.Term;
 import com.kajabity.prolog.io.parse.ParseException;
 import com.kajabity.prolog.io.parse.PrologParser;
 import com.kajabity.prolog.io.predicate.AssertFunctionPredicate;
 import com.kajabity.prolog.io.predicate.AssertGroundLiteralPredicate;
-import com.kajabity.prolog.io.predicate.AssertProcessor;
-import com.kajabity.prolog.io.predicate.FactProcessor;
+import com.kajabity.prolog.builtin.processor.AssertProcessor;
+import com.kajabity.prolog.builtin.processor.FactProcessor;
 import com.kajabity.prolog.io.predicate.ImmediateProcessor;
-import com.kajabity.prolog.io.predicate.ListDatabaseProcessor;
-import com.kajabity.prolog.io.predicate.QuitProcessor;
+import com.kajabity.prolog.builtin.processor.ListDatabaseProcessor;
+import com.kajabity.prolog.builtin.processor.QuitProcessor;
 import com.kajabity.prolog.io.predicate.SolveProcessor;
 import com.kajabity.prolog.io.token.Tokeniser;
 import com.kajabity.utils.token.InputStreamTokenSource;
@@ -72,27 +74,8 @@ public class Prolog
     {
         Database database = new Database( System.in, System.out, System.err );
 
-        database.add( new QuitProcessor( "quit" ) );
-
-        database.add( new ImmediateProcessor( ":-" ) );
-        database.add( new SimpleOperator( ":-", Associativity.fx, 1200 ) );
-
-        database.add( new AssertProcessor( ":-" ) );
-        database.add( new SimpleOperator( ":-", Associativity.xfx, 1200 ) );
-
-        database.add( new SolveProcessor( "?-" ) );
-        database.add( new SimpleOperator( "?-", Associativity.fx, 1200 ) );
-
-        database.setDefaultProcessor( new FactProcessor( "" ) );
-
-        database.add( new ListDatabaseProcessor( "list_db" ) );
-
-        database.add( new AssertGroundLiteralPredicate( database, "assertg", 2 ) );
-        database.add( new AssertFunctionPredicate( database, "assert_function", 2 ) );
-        database.add( new SimpleOperator( "/", Associativity.yfx, 400 ) );
-
-        // Now initialised in "initialise.pro".
-        //InitialiseArithmeticBuiltins.initialise( database );
+        InitialiseParserBuiltins.initialise( database );
+        InitialiseBuiltins.initialise( database );
 
         return database;
     }

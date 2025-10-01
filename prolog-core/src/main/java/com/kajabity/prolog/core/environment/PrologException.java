@@ -20,55 +20,50 @@ package com.kajabity.prolog.core.environment;
 
 /**
  * @author Simon
- *
+ * <p>
  * To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class PrologException extends Exception
-{
-	/**
+public class PrologException extends Exception {
+    /**
      *
      */
     private static final long serialVersionUID = -3131909369895745446L;
 
 
     /**
-	 *
-	 */
-	public PrologException()
-	{
-		super();
-		// TODO Auto-generated constructor stub
-	}
+     *
+     */
+    public PrologException() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 
-	/**
-	 * @param message
-	 */
-	public PrologException( String message )
-	{
-		super( message );
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param message
+     */
+    public PrologException(String message) {
+        super(message);
+        // TODO Auto-generated constructor stub
+    }
 
 
-	/**
-	 * @param cause
-	 */
-	public PrologException( Throwable cause )
-	{
-		super( cause );
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param cause
+     */
+    public PrologException(Throwable cause) {
+        super(cause);
+        // TODO Auto-generated constructor stub
+    }
 
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public PrologException( String message, Throwable cause )
-	{
-		super( message, cause );
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param message
+     * @param cause
+     */
+    public PrologException(String message, Throwable cause) {
+        super(message, cause);
+        // TODO Auto-generated constructor stub
+    }
 }

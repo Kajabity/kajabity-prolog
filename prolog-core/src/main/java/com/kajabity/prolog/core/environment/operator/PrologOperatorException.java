@@ -22,55 +22,50 @@ import com.kajabity.prolog.core.environment.PrologException;
 
 /**
  * @author Simon
- *
+ * <p>
  * To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class PrologOperatorException extends PrologException
-{
-	/**
+public class PrologOperatorException extends PrologException {
+    /**
      *
      */
     private static final long serialVersionUID = 122762296305015401L;
 
 
     /**
-	 *
-	 */
-	public PrologOperatorException()
-	{
-		super();
-		// TODO Auto-generated constructor stub
-	}
+     *
+     */
+    public PrologOperatorException() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 
-	/**
-	 * @param message
-	 */
-	public PrologOperatorException( String message )
-	{
-		super( message );
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param message
+     */
+    public PrologOperatorException(String message) {
+        super(message);
+        // TODO Auto-generated constructor stub
+    }
 
 
-	/**
-	 * @param cause
-	 */
-	public PrologOperatorException( Throwable cause )
-	{
-		super( cause );
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param cause
+     */
+    public PrologOperatorException(Throwable cause) {
+        super(cause);
+        // TODO Auto-generated constructor stub
+    }
 
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public PrologOperatorException( String message, Throwable cause )
-	{
-		super( message, cause );
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param message
+     * @param cause
+     */
+    public PrologOperatorException(String message, Throwable cause) {
+        super(message, cause);
+        // TODO Auto-generated constructor stub
+    }
 }

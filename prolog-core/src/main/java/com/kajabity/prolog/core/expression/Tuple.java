@@ -26,9 +26,8 @@ import java.util.Map;
  * @author Simon J. Williams
  */
 public final class Tuple
-    extends Term
-{
-    private final Term     functor;
+        extends Term {
+    private final Term functor;
     private final TermList args;
 
     /**
@@ -37,12 +36,11 @@ public final class Tuple
      * @param functor
      * @param args
      */
-    public Tuple( Term functor, TermList args )
-    {
-        super( TAG_TUPLE, functor.toString(  ), args.size(  ) );
+    public Tuple(Term functor, TermList args) {
+        super(TAG_TUPLE, functor.toString(), args.size());
 
-        this.functor     = functor;
-        this.args        = args;
+        this.functor = functor;
+        this.args = args;
     }
 
     /**
@@ -51,12 +49,11 @@ public final class Tuple
      * @param functor
      * @param args
      */
-    public Tuple( Term functor, Term arg )
-    {
-        super( TAG_TUPLE, functor.toString(  ), 1 );
+    public Tuple(Term functor, Term arg) {
+        super(TAG_TUPLE, functor.toString(), 1);
 
-        this.functor     = functor;
-        this.args        = new TermList( arg );
+        this.functor = functor;
+        this.args = new TermList(arg);
     }
 
     /**
@@ -64,8 +61,7 @@ public final class Tuple
      *
      * @return Returns the args.
      */
-    public TermList getArgs(  )
-    {
+    public TermList getArgs() {
         return args;
     }
 
@@ -74,8 +70,7 @@ public final class Tuple
      *
      * @return Returns the functor.
      */
-    public Term getFunctor(  )
-    {
+    public Term getFunctor() {
         return functor;
     }
 
@@ -84,12 +79,10 @@ public final class Tuple
      *
      * @see Object#equals(Object)
      */
-    public boolean equals( Object obj )
-    {
-        if( obj instanceof Tuple )
-        {
-            return functor.equals( ( (Tuple) obj ).functor ) &&
-                   args.equals( ( (Tuple) obj ).args );
+    public boolean equals(Object obj) {
+        if (obj instanceof Tuple) {
+            return functor.equals(((Tuple) obj).functor) &&
+                    args.equals(((Tuple) obj).args);
         }
 
         return false;
@@ -98,39 +91,34 @@ public final class Tuple
     /*
      * @see java.lang.Object#hashCode()
      */
-    public int hashCode(  )
-    {
+    public int hashCode() {
         //TODO: hash from func and args.
-        return super.hashCode(  );
+        return super.hashCode();
     }
 
     /**
      * @see Object#toString()
      */
-    public String toString(  )
-    {
-        StringBuffer buf = new StringBuffer(  );
+    public String toString() {
 
-        buf.append( functor.toString(  ) );
-        buf.append( "( " );
-        buf.append( args.toString(  ) );
-        buf.append( " )" );
+        String buf = functor.toString() +
+                "( " +
+                args.toString() +
+                " )";
 
-        return buf.toString(  );
+        return buf;
     }
 
-    public Expression makeCopy( Map<String, Variable> variables )
-    {
-        return new Tuple( (Term) functor.makeCopy( variables ),
-                          (TermList) args.makeCopy( variables ) );
+    public Expression makeCopy(Map<String, Variable> variables) {
+        return new Tuple((Term) functor.makeCopy(variables),
+                (TermList) args.makeCopy(variables));
     }
 
     /**
      * @see Expression#containsVariable(Variable)
      */
-    public boolean containsVariable( Variable variable )
-    {
-        return functor.containsVariable( variable ) ||
-               args.containsVariable( variable );
+    public boolean containsVariable(Variable variable) {
+        return functor.containsVariable(variable) ||
+                args.containsVariable(variable);
     }
 }

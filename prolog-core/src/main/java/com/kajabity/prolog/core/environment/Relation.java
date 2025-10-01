@@ -22,18 +22,15 @@ import com.kajabity.prolog.core.engine.Goal;
 import com.kajabity.prolog.core.expression.TermKey;
 
 
-
 /**
  * DOCUMENT ME!
  *
  * @author Simon To change the template for this generated type comment go to
- *         Window - Preferences - Java - Code Generation - Code and Comments
+ * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public abstract class Relation extends TermKey
-{
-    public Relation( String name, int arity )
-    {
-        super( name, arity );
+public abstract class Relation extends TermKey {
+    public Relation(String name, int arity) {
+        super(name, arity);
     }
 
 
@@ -43,11 +40,12 @@ public abstract class Relation extends TermKey
     public abstract boolean isDynamic();
 
 
-    public abstract void setDynamic( boolean dynamic );
+    public abstract void setDynamic(boolean dynamic);
 
 
-    public abstract IConsortIterator getConsortIterator( Goal goal );
+    public abstract IConsortIterator getConsortIterator(Goal goal);
 
-    public abstract void add( Clause clause ) throws PrologException;
-    public abstract void insert( int index, Clause clause ) throws PrologException;
+    public abstract void add(Clause clause) throws PrologException;
+
+    public abstract void insert(int index, Clause clause) throws PrologException;
 }

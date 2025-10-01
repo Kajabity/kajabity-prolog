@@ -16,9 +16,6 @@
  *
  */
 
-/**
- *
- */
 package com.kajabity.prolog.io.predicate;
 
 import java.io.IOException;

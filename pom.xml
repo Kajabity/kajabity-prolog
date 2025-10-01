@@ -29,12 +29,12 @@
     <name>Kajabity Prolog - Parent</name>
 
     <modules>
-        <module>prolog-core</module>
         <module>kajabity.utils</module>
         <module>kajabity-collections</module>
-        <module>prolog-console</module>
+        <module>prolog-core</module>
+        <module>prolog-builtin</module>
         <module>prolog-io</module>
-        <module>prolog-libs</module>
+        <module>prolog-console</module>
     </modules>
 
     <properties>

@@ -25,7 +25,7 @@ import junit.framework.TestCase;
 import com.kajabity.prolog.core.environment.Associativity;
 import com.kajabity.prolog.core.environment.Database;
 import com.kajabity.prolog.core.environment.PrologException;
-import com.kajabity.prolog.core.environment.operator.SimpleOperator;
+import com.kajabity.prolog.builtin.operator.SimpleOperator;
 import com.kajabity.prolog.core.expression.Expression;
 import com.kajabity.prolog.io.format.PrologFormat;
 import com.kajabity.prolog.io.format.SimplePrologFormat;

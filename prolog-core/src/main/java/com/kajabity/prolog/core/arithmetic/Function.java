@@ -17,27 +17,23 @@
  */
 package com.kajabity.prolog.core.arithmetic;
 
-import java.util.Stack;
-
 import com.kajabity.prolog.core.expression.NumericConstant;
 import com.kajabity.prolog.core.expression.TermKey;
 
-
+import java.util.Stack;
 
 
 /**
  * DOCUMENT ME!
  *
  * @author Simon To change the template for this generated type comment go to
- *         Window - Preferences - Java - Code Generation - Code and Comments
+ * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public abstract class Function
-    extends TermKey
-{
-    public Function( String name, int arity )
-    {
-    	super( name, arity );
+        extends TermKey {
+    public Function(String name, int arity) {
+        super(name, arity);
     }
 
-    public abstract NumericConstant evaluate( Stack<NumericConstant> values );
+    public abstract NumericConstant evaluate(Stack<NumericConstant> values);
 }

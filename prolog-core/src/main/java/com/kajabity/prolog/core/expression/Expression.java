@@ -24,27 +24,25 @@ import java.util.Map;
  * DOCUMENT ME!
  *
  * @author Simon To change the template for this generated type comment go to
- *         Window - Preferences - Java - Code Generation - Code and Comments
+ * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public interface Expression
-{
+public interface Expression {
     /**
      * Used for variable identification - for anything except a substituted
      * variable this returns 'this'.
      *
      * @return DOCUMENT ME!
      */
-    public Expression getFinalInstantiation(  );
+    Expression getFinalInstantiation();
 
     /**
      * test if an expression contains a variable.
      *
-     * @param expr DOCUMENT ME!
+     * @param expr     DOCUMENT ME!
      * @param variable DOCUMENT ME!
-     *
      * @return DOCUMENT ME!
      */
-    public boolean containsVariable( Variable variable );
+    boolean containsVariable(Variable variable);
 
     /**
      * A method for combining comma separated Terms into a List. It assumes
@@ -54,10 +52,9 @@ public interface Expression
      * than the comma (",").
      *
      * @param expr An .
-     *
      * @return a List of Terms.
      */
-    public abstract TermList append( Expression expr );
+    TermList append(Expression expr);
 
     /*
      * private boolean bracketed = false;
@@ -92,16 +89,15 @@ public interface Expression
      * themselves.
      *
      * @param variables a Map of all non-anonymous variables replaced during
-     *        the copy keyed by their String names.
-     *
+     *                  the copy keyed by their String names.
      * @return a new Term with any contained variables replaced.
      */
-    public Expression makeCopy( Map<String, Variable> variables );
+    Expression makeCopy(Map<String, Variable> variables);
 
     /**
      * Differentiate between Terms and Lists of Terms.
      *
      * @return DOCUMENT ME!
      */
-    public boolean isTerm(  );
+    boolean isTerm();
 }

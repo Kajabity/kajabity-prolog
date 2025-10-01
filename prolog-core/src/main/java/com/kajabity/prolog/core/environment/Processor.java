@@ -17,12 +17,11 @@
  */
 package com.kajabity.prolog.core.environment;
 
-import java.io.IOException;
-
-
 import com.kajabity.prolog.core.expression.Term;
 import com.kajabity.prolog.core.expression.TermKey;
 import com.kajabity.utils.token.TokenException;
+
+import java.io.IOException;
 
 
 /**
@@ -31,12 +30,10 @@ import com.kajabity.utils.token.TokenException;
  *
  */
 public abstract class Processor
-    extends TermKey
-{
-    public Processor( String name, int arity )
-    {
-        super( name, arity );
+        extends TermKey {
+    public Processor(String name, int arity) {
+        super(name, arity);
     }
 
-    public abstract void execute( Database db, Term term ) throws PrologException, IOException, TokenException;
+    public abstract void execute(Database db, Term term) throws PrologException, IOException, TokenException;
 }

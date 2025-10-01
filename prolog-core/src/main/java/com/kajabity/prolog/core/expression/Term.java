@@ -24,47 +24,41 @@ import java.util.Map;
  *
  * @author Simon J. Williams
  */
-public abstract class Term extends TermKey implements Expression
-{
+public abstract class Term extends TermKey implements Expression {
     public final static int TAG_VARIABLE = 0;
 
-    public final static int TAG_INTEGER  = 1;
+    public final static int TAG_INTEGER = 1;
 
-    public final static int TAG_REAL     = 2;
+    public final static int TAG_REAL = 2;
 
-    public final static int TAG_ATOM     = 3;
+    public final static int TAG_ATOM = 3;
 
-    public final static int TAG_NIL      = 4;
+    public final static int TAG_NIL = 4;
 
-    public final static int TAG_LIST     = 5;
+    public final static int TAG_LIST = 5;
 
-    public final static int TAG_TUPLE    = 6;
+    public final static int TAG_TUPLE = 6;
 
-    private int             tag;
+    private int tag;
 
 
     /**
      * Contruct the abstract base Term class - provide and explicit tag value.
      *
-     * @param tag identifies the type of the Term.
-     * @param name DOCUMENT ME!
+     * @param tag   identifies the type of the Term.
+     * @param name  DOCUMENT ME!
      * @param arity DOCUMENT ME!
      */
-    public Term( int tag, String name, int arity )
-    {
-        super( name, arity );
+    public Term(int tag, String name, int arity) {
+        super(name, arity);
 
         this.tag = tag;
 
         // Check for Lists...
-        if( name.equals( "." ) )
-        {
-            if( arity == 0 )
-            {
+        if (name.equals(".")) {
+            if (arity == 0) {
                 this.tag = TAG_NIL;
-            }
-            else if( arity == 2 )
-            {
+            } else if (arity == 2) {
                 this.tag = TAG_LIST;
             }
         }
@@ -76,8 +70,7 @@ public abstract class Term extends TermKey implements Expression
      *
      * @return Returns the tag.
      */
-    public int getTag()
-    {
+    public int getTag() {
         return tag;
     }
 
@@ -92,17 +85,15 @@ public abstract class Term extends TermKey implements Expression
      * @param expr A Term or List of terms to be extended.
      * @return a List of Terms.
      */
-    public TermList append( Expression expr )
-    {
-        return new TermList( this, expr );
+    public TermList append(Expression expr) {
+        return new TermList(this, expr);
     }
 
 
     /**
      * @see Expression#containsVariable(Variable)
      */
-    public boolean containsVariable( Variable variable )
-    {
+    public boolean containsVariable(Variable variable) {
         return false;
     }
 
@@ -110,8 +101,7 @@ public abstract class Term extends TermKey implements Expression
     /**
      * @see Expression#getFinalInstantiation()
      */
-    public Expression getFinalInstantiation()
-    {
+    public Expression getFinalInstantiation() {
         return this;
     }
 
@@ -121,8 +111,7 @@ public abstract class Term extends TermKey implements Expression
      *
      * @see com.kajabity.prolog.core.expression.Expression#makeCopy(java.util.Map)
      */
-    public Expression makeCopy( Map<String, Variable> variables )
-    {
+    public Expression makeCopy(Map<String, Variable> variables) {
         return this;
     }
 
@@ -130,8 +119,7 @@ public abstract class Term extends TermKey implements Expression
     /**
      * @see Expression#isTerm()
      */
-    public boolean isTerm()
-    {
+    public boolean isTerm() {
         return true;
     }
 }

@@ -26,41 +26,35 @@ import java.util.Map;
  * @author Simon J. Williams
  */
 public final class Variable
-    extends Term
-{
+        extends Term {
     public final static char ANONYMOUS_START = '_';
-    private final String     name;
-    private final boolean    anonymous;
-    private Expression       instance = null;
+    private final String name;
+    private final boolean anonymous;
+    private Expression instance = null;
 
     /**
      * DOCUMENT ME!
      *
      * @param name
      */
-    public Variable( String name )
-    {
-        super( TAG_VARIABLE, name, 0 );
+    public Variable(String name) {
+        super(TAG_VARIABLE, name, 0);
 
-        this.name          = name;
-        this.anonymous     = ( name.charAt( 0 ) == ANONYMOUS_START );
+        this.name = name;
+        this.anonymous = (name.charAt(0) == ANONYMOUS_START);
     }
 
     /**
      * DOCUMENT ME!
      *
      * @return the deepest instance for this variable - or itself if not
-     *         instantiated.
+     * instantiated.
      */
-    public Expression getFinalInstantiation(  )
-    {
-        if( instance == null )
-        {
+    public Expression getFinalInstantiation() {
+        if (instance == null) {
             return this;
-        }
-        else
-        {
-            return instance.getFinalInstantiation(  );
+        } else {
+            return instance.getFinalInstantiation();
         }
     }
 
@@ -70,19 +64,8 @@ public final class Variable
      *
      * @return DOCUMENT ME!
      */
-    public boolean isInstatiated(  )
-    {
+    public boolean isInstatiated() {
         return instance != null;
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param instance
-     */
-    public void setInstance( Expression instance )
-    {
-        this.instance = instance;
     }
 
     /**
@@ -90,9 +73,17 @@ public final class Variable
      *
      * @return
      */
-    public Expression getInstance(  )
-    {
+    public Expression getInstance() {
         return instance;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param instance
+     */
+    public void setInstance(Expression instance) {
+        this.instance = instance;
     }
 
     /**
@@ -100,8 +91,7 @@ public final class Variable
      *
      * @return a String representation of this Variable.
      */
-    public String toString(  )
-    {
+    public String toString() {
         return name;
     }
 
@@ -110,26 +100,20 @@ public final class Variable
      * not anonymous and one exists.
      *
      * @param variables A map of all non-anonymous variables replaced during
-     *        the copy.
-     *
+     *                  the copy.
      * @return a copy of this Variable.
      */
-    public Expression makeCopy( Map<String, Variable> variables )
-    {
+    public Expression makeCopy(Map<String, Variable> variables) {
         Variable v;
 
-        if( anonymous )
-        {
-            v = new Variable( name );
-        }
-        else
-        {
-            v = (Variable) variables.get( name );
+        if (anonymous) {
+            v = new Variable(name);
+        } else {
+            v = variables.get(name);
 
-            if( v == null )
-            {
-                v = new Variable( name );
-                variables.put( name, v );
+            if (v == null) {
+                v = new Variable(name);
+                variables.put(name, v);
             }
         }
 
@@ -139,15 +123,14 @@ public final class Variable
     /**
      * @see Expression#containsVariable(Variable)
      */
-    public boolean containsVariable( Variable variable )
-    {
-        return equals( variable );
+    public boolean containsVariable(Variable variable) {
+        return equals(variable);
     }
+
     /**
      * @return Returns the anonymous.
      */
-    public boolean isAnonymous()
-    {
+    public boolean isAnonymous() {
         return anonymous;
     }
 }

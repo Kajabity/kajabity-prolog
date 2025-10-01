@@ -29,17 +29,15 @@ import com.kajabity.prolog.core.expression.Term;
 
 /**
  * @author simon To change the template for this generated type comment go to
- *         Window - Preferences - Java - Code Generation - Code and Comments
+ * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class Clause
-{
-    private Term       head;
+public class Clause {
+    private final Term head;
 
-    private Expression tail;
+    private final Expression tail;
 
 
-    public Clause( Term head, Expression tail )
-    {
+    public Clause(Term head, Expression tail) {
         this.head = head;
         this.tail = tail;
     }
@@ -48,8 +46,7 @@ public class Clause
     /**
      * @return Returns the head.
      */
-    public Term getHead()
-    {
+    public Term getHead() {
         return head;
     }
 
@@ -57,8 +54,7 @@ public class Clause
     /**
      * @return Returns the tail.
      */
-    public Expression getTail()
-    {
+    public Expression getTail() {
         return tail;
     }
 }

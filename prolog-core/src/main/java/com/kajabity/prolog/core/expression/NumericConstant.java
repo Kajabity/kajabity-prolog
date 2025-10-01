@@ -25,45 +25,41 @@ package com.kajabity.prolog.core.expression;
  * @author Simon J. Williams
  */
 public final class NumericConstant
-    extends Term
-{
+        extends Term {
     /**
      * Holds the value of this object as either an integer or real number.  It
      * is expected to contain either a Double or a Long object.
      */
-    private Number value;
+    private final Number value;
 
     /**
      * Constructor for an INT numeric constant.
      *
      * @param value a long value which will be used to construct a Long numeric
-     *        constant.
+     *              constant.
      */
-    public NumericConstant( long value )
-    {
-        this( TAG_INTEGER, new Long( value ) );
+    public NumericConstant(long value) {
+        this(TAG_INTEGER, Long.valueOf(value));
     }
 
     /**
      * Constructor for a REAL numeric constant.
      *
      * @param value a double value which will be used to construct a Double
-     *        numeric constant.
+     *              numeric constant.
      */
-    public NumericConstant( double value )
-    {
-        this( TAG_REAL, new Double( value ) );
+    public NumericConstant(double value) {
+        this(TAG_REAL, new Double(value));
     }
 
     /**
      * A constructor allowing either INT or REAL to be given in the tag.
      *
-     * @param tag either INT or REAL for integer or real values.
+     * @param tag   either INT or REAL for integer or real values.
      * @param value the value - must be either Long or Double.
      */
-    private NumericConstant( int tag, Number value )
-    {
-        super( tag, value.toString(  ), 0 );
+    private NumericConstant(int tag, Number value) {
+        super(tag, value.toString(), 0);
 
         this.value = value;
     }
@@ -73,15 +69,11 @@ public final class NumericConstant
      *
      * @see Object#equals(Object)
      */
-    public boolean equals( Object obj )
-    {
-        if( obj instanceof NumericConstant )
-        {
-            return value.equals( ( (NumericConstant) obj ).value );
-        }
-        else
-        {
-            return value.equals( obj );
+    public boolean equals(Object obj) {
+        if (obj instanceof NumericConstant) {
+            return value.equals(((NumericConstant) obj).value);
+        } else {
+            return value.equals(obj);
         }
     }
 
@@ -90,9 +82,8 @@ public final class NumericConstant
      *
      * @see Object#hashCode()
      */
-    public int hashCode(  )
-    {
-        return value.hashCode(  );
+    public int hashCode() {
+        return value.hashCode();
     }
 
     /**
@@ -100,34 +91,29 @@ public final class NumericConstant
      *
      * @see Object#toString()
      */
-    public String toString(  )
-    {
-        return value.toString(  );
+    public String toString() {
+        return value.toString();
     }
 
-    public boolean isReal()
-    {
+    public boolean isReal() {
         return getTag() == TAG_REAL;
     }
 
     /**
      * @return
      */
-    public long longValue()
-    {
+    public long longValue() {
         return value.longValue();
     }
 
-    public boolean isInteger()
-    {
+    public boolean isInteger() {
         return getTag() == TAG_INTEGER;
     }
 
     /**
      * @return
      */
-    public double doubleValue()
-    {
+    public double doubleValue() {
         return value.doubleValue();
     }
 }

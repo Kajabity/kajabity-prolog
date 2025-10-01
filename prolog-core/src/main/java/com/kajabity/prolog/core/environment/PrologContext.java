@@ -23,14 +23,13 @@ import com.kajabity.prolog.core.environment.operator.Operator;
 import com.kajabity.prolog.core.expression.Expression;
 import com.kajabity.prolog.core.expression.Term;
 
-public interface PrologContext
-{
+public interface PrologContext {
 
-    void asserta( Term head, Expression tail ) throws PrologException;
+    void asserta(Term head, Expression tail) throws PrologException;
 
-    void assertz( Term head, Expression tail ) throws PrologException;
+    void assertz(Term head, Expression tail) throws PrologException;
 
-    Relation findRelation( Term term );
+    Relation findRelation(Term term);
 
     /**
      * Lookup the given name as an operator with the specified type - return
@@ -40,9 +39,9 @@ public interface PrologContext
      * @param position
      * @return
      */
-    Operator findOperator( String name, Associativity.Position position );
+    Operator findOperator(String name, Associativity.Position position);
 
-    Function findFunction( String name, int arity );
+    Function findFunction(String name, int arity);
 
     /**
      * Lookup a processor for a term. Some expected ones are: - assertClause
@@ -53,7 +52,7 @@ public interface PrologContext
      * @param arity
      * @return
      */
-    Processor findProcessor( String name, int arity );
+    Processor findProcessor(String name, int arity);
 
     /**
      * @return Returns the terminated.
@@ -61,9 +60,8 @@ public interface PrologContext
     boolean isTerminated();
 
     /**
-     * @param terminated
-     *            The terminated to set.
+     * @param terminated The terminated to set.
      */
-    void setTerminated( boolean terminated );
+    void setTerminated(boolean terminated);
 
 }
