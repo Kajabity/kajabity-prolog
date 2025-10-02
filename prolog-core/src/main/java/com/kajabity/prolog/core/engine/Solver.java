@@ -22,7 +22,8 @@ import com.kajabity.prolog.core.expression.Expression;
 import com.kajabity.prolog.core.expression.Term;
 import com.kajabity.prolog.core.expression.Variable;
 import com.kajabity.utils.token.TokenException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -36,7 +37,7 @@ import java.util.Map;
  * @author Simon
  */
 public class Solver {
-    private final static Logger logger = Logger.getLogger(Solver.class);
+    private final static Logger logger = LogManager.getLogger(Solver.class);
 
     private final PrologContext database;
 

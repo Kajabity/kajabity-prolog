@@ -17,23 +17,19 @@
  */
 package com.kajabity.prolog.io.predicate;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.apache.log4j.Logger;
-
+import com.kajabity.prolog.builtin.operator.SimpleOperator;
 import com.kajabity.prolog.core.arithmetic.ArithmeticExpression;
 import com.kajabity.prolog.core.engine.Goal;
 import com.kajabity.prolog.core.environment.Associativity;
 import com.kajabity.prolog.core.environment.Database;
 import com.kajabity.prolog.core.environment.GroundLiteral;
 import com.kajabity.prolog.core.environment.PrologException;
-import com.kajabity.prolog.builtin.operator.SimpleOperator;
-import com.kajabity.prolog.core.expression.Atom;
-import com.kajabity.prolog.core.expression.Expression;
-import com.kajabity.prolog.core.expression.NumericConstant;
-import com.kajabity.prolog.core.expression.Tuple;
-import com.kajabity.prolog.core.expression.Variable;
+import com.kajabity.prolog.core.expression.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -41,16 +37,14 @@ import com.kajabity.prolog.core.expression.Variable;
  *
  * @author Simon J. Williams
  */
-public class Op3PredicateTemp extends GroundLiteral
-{
-    private final static Logger logger       = Logger
-            .getLogger( Op3PredicateTemp.class );
+public class Op3PredicateTemp extends GroundLiteral {
+    private final static Logger logger = LogManager.getLogger(Op3PredicateTemp.class);
 
-    private final static String KEY          = "Associativity";
+    private final static String KEY = "Associativity";
 
-    private final static int    MAX_PRIORITY = 1200;
+    private final static int MAX_PRIORITY = 1200;
 
-    private final static int    MIN_PRIORITY = 1;
+    private final static int MIN_PRIORITY = 1;
 
 
     /**
@@ -58,36 +52,35 @@ public class Op3PredicateTemp extends GroundLiteral
      *
      * @param database
      */
-    public Op3PredicateTemp( Database database, String name, int arity )
-    {
-        super( database, name, arity );
+    public Op3PredicateTemp(Database database, String name, int arity) {
+        super(database, name, arity);
         assert arity == 3;
 
         Atom atom;
 
-        atom = Atom.find( "fx" );
-        atom.setProperty( KEY, Associativity.fx );
+        atom = Atom.find("fx");
+        atom.setProperty(KEY, Associativity.fx);
 
-        atom = Atom.find( "fy" );
-        atom.setProperty( KEY, Associativity.fy );
+        atom = Atom.find("fy");
+        atom.setProperty(KEY, Associativity.fy);
 
-        atom = Atom.find( "xfx" );
-        atom.setProperty( KEY, Associativity.xfx );
+        atom = Atom.find("xfx");
+        atom.setProperty(KEY, Associativity.xfx);
 
-        atom = Atom.find( "xfy" );
-        atom.setProperty( KEY, Associativity.xfy );
+        atom = Atom.find("xfy");
+        atom.setProperty(KEY, Associativity.xfy);
 
-        atom = Atom.find( "yfx" );
-        atom.setProperty( KEY, Associativity.yfx );
+        atom = Atom.find("yfx");
+        atom.setProperty(KEY, Associativity.yfx);
 
-        atom = Atom.find( "xf" );
+        atom = Atom.find("xf");
         atom
                 .setProperty(
                         KEY,
-                        com.kajabity.prolog.core.environment.Associativity.xf );
+                        com.kajabity.prolog.core.environment.Associativity.xf);
 
-        atom = Atom.find( "yf" );
-        atom.setProperty( KEY, Associativity.yf );
+        atom = Atom.find("yf");
+        atom.setProperty(KEY, Associativity.yf);
     }
 
 
@@ -99,70 +92,63 @@ public class Op3PredicateTemp extends GroundLiteral
      *
      * @param goal
      * @return List of substitutions - or null for a fail. In this op it will be
-     *         an empty list if the operator is added ok or null if anything is
-     *         wrong.
+     * an empty list if the operator is added ok or null if anything is
+     * wrong.
      * @throws PrologException
      * @see GroundLiteral#execute(Goal)
      */
-    protected List<Variable> execute( Goal goal ) throws PrologException
-    {
+    protected List<Variable> execute(Goal goal) throws PrologException {
         //  the goal should contain a Tuple (op/3).
-        if( goal.getTerm() instanceof Tuple )
-        {
+        if (goal.getTerm() instanceof Tuple) {
             Tuple tuple = (Tuple) goal.getTerm();
-            if( tuple.getArity() == 3 )
-            {
+            if (tuple.getArity() == 3) {
                 List<Expression> args = tuple.getArgs().getTerms();
 
-                Expression p1 = args.get( 0 );
-                Expression p2 = args.get( 1 );
-                Expression p3 = args.get( 2 );
+                Expression p1 = args.get(0);
+                Expression p2 = args.get(1);
+                Expression p3 = args.get(2);
 
-                ArithmeticExpression ae = new ArithmeticExpression( p1 );
-                NumericConstant result = ae.eval( database );
+                ArithmeticExpression ae = new ArithmeticExpression(p1);
+                NumericConstant result = ae.eval(database);
 
                 int priority = (int) result.longValue();
-                if( priority < MIN_PRIORITY || priority > MAX_PRIORITY )
-                {
+                if (priority < MIN_PRIORITY || priority > MAX_PRIORITY) {
                     priority = 0;
                 }
 
                 Associativity ass = null;
-                if( p2 instanceof Atom )
-                {
-                    ass = (Associativity) ((Atom) p2).getProperty( KEY );
+                if (p2 instanceof Atom) {
+                    ass = (Associativity) ((Atom) p2).getProperty(KEY);
                 }
 
-                if( ass == null )
-                {
+                if (ass == null) {
                     throw new PrologException(
                             getKey()
                                     + ": Second parameter must specify associativity - "
-                                    + goal.getTerm() );
+                                    + goal.getTerm());
                 }
 
-                if( p3 instanceof Atom )
-                {
+                if (p3 instanceof Atom) {
                     Atom opName = (Atom) p3;
-                    SimpleOperator op = new SimpleOperator( opName.getName(),
-                            ass, priority );
-                    database.add( op );
+                    SimpleOperator op = new SimpleOperator(opName.getName(),
+                            ass, priority);
+                    database.add(op);
 
-                    logger.debug( getKey() + ": Added operator " + op );
+                    logger.debug(getKey() + ": Added operator " + op);
 
                     return Collections.emptyList();
                 }
 
-                throw new PrologException( getKey()
+                throw new PrologException(getKey()
                         + ": Third parameter must be the operator name - "
-                        + goal.getTerm() );
+                        + goal.getTerm());
             }
 
-            throw new PrologException( getKey()
-                    + ": Goal should have 3 parameters - " + goal.getTerm() );
+            throw new PrologException(getKey()
+                    + ": Goal should have 3 parameters - " + goal.getTerm());
         }
 
-        throw new PrologException( getKey() + ": Goal should be a Tuple - "
-                + goal.getTerm() );
+        throw new PrologException(getKey() + ": Goal should be a Tuple - "
+                + goal.getTerm());
     }
 }

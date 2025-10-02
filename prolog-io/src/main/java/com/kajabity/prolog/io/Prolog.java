@@ -29,7 +29,8 @@ import com.kajabity.prolog.io.token.Tokeniser;
 import com.kajabity.utils.token.InputStreamTokenSource;
 import com.kajabity.utils.token.TokenException;
 import com.kajabity.utils.token.TokenSource;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,7 +46,7 @@ import java.nio.file.Paths;
  * @author Simon
  */
 public class Prolog {
-    private final static Logger logger = Logger.getLogger(Prolog.class);
+    private final static Logger logger = LogManager.getLogger(Prolog.class);
 
     /**
      * Create a new database with some Core build-ins.

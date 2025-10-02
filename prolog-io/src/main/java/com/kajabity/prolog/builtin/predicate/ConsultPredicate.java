@@ -24,7 +24,8 @@ import com.kajabity.prolog.core.environment.PrologException;
 import com.kajabity.prolog.core.expression.*;
 import com.kajabity.prolog.io.Prolog;
 import com.kajabity.utils.token.TokenException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -37,7 +38,7 @@ import java.util.List;
  * Window>Preferences>Java>Code Generation.
  */
 public class ConsultPredicate extends GroundLiteral {
-    private final static Logger logger = Logger.getLogger(ConsultPredicate.class);
+    private final static Logger logger = LogManager.getLogger(ConsultPredicate.class);
 
     public ConsultPredicate(Database database) {
         this(database, "consult", 1);

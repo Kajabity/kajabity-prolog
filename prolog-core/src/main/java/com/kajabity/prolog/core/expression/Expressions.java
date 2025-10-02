@@ -17,7 +17,9 @@
  */
 package com.kajabity.prolog.core.expression;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,7 +38,7 @@ public class Expressions {
      * not confuse with the end of clause full stop.
      */
     public final static Atom NIL = Atom.find(".");
-    private final static Logger logger = Logger.getLogger(Expressions.class);
+    private static final Logger logger = LogManager.getLogger(Expressions.class);
 
     /**
      * Undo a List of substitutions. When substitutions are made during

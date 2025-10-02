@@ -26,7 +26,8 @@ import com.kajabity.prolog.core.expression.Atom;
 import com.kajabity.prolog.core.expression.Expression;
 import com.kajabity.prolog.core.expression.NumericConstant;
 import com.kajabity.prolog.core.expression.Tuple;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Iterator;
 import java.util.Stack;
@@ -41,7 +42,7 @@ import java.util.Stack;
  * @author simon
  */
 public class ArithmeticExpression {
-    private final static Logger logger = Logger
+    private final static Logger logger = LogManager
             .getLogger(ArithmeticExpression.class);
 
     /**

@@ -21,7 +21,8 @@ import com.kajabity.prolog.core.arithmetic.Function;
 import com.kajabity.prolog.core.environment.operator.Operator;
 import com.kajabity.prolog.core.expression.Expression;
 import com.kajabity.prolog.core.expression.Term;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -41,7 +42,8 @@ public class Database implements PrologContext {
     public final static String DEFAULT_INPUT_STREAM_NAME = "_default";
     public final static String DEFAULT_OUTPUT_STREAM_NAME = "_default";
     public final static String DEFAULT_ERROR_STREAM_NAME = "_default";
-    private final static Logger logger = Logger.getLogger(Database.class);
+    private final static Logger logger = LogManager.getLogger(Database.class);
+
     // ========================================================================
     // operators
     Map<String, Operator> operators = new TreeMap<String, Operator>();
