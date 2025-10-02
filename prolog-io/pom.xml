@@ -24,7 +24,7 @@
     <parent>
         <groupId>com.kajabity.prolog</groupId>
         <artifactId>kajabity-prolog-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>0.1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>prolog-io</artifactId>
@@ -38,13 +38,13 @@
         <dependency>
             <groupId>com.kajabity.prolog</groupId>
             <artifactId>prolog-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>0.1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.kajabity.prolog</groupId>
             <artifactId>prolog-builtin</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>0.1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

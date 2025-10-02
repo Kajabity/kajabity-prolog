@@ -17,43 +17,34 @@
  */
 package com.kajabity.prolog.builtin.predicate;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Collections;
-import java.util.List;
-
-import org.apache.log4j.Logger;
-
 import com.kajabity.prolog.core.engine.Goal;
 import com.kajabity.prolog.core.environment.Database;
 import com.kajabity.prolog.core.environment.GroundLiteral;
 import com.kajabity.prolog.core.environment.PrologException;
-import com.kajabity.prolog.core.expression.Atom;
-import com.kajabity.prolog.core.expression.Expression;
-import com.kajabity.prolog.core.expression.Term;
-import com.kajabity.prolog.core.expression.Tuple;
-import com.kajabity.prolog.core.expression.Variable;
+import com.kajabity.prolog.core.expression.*;
 import com.kajabity.prolog.io.Prolog;
 import com.kajabity.utils.token.TokenException;
+import org.apache.log4j.Logger;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Simon To change this generated comment edit the template variable
- *         "typecomment": Window>Preferences>Java>Templates. To enable and
- *         disable the creation of type comments go to
- *         Window>Preferences>Java>Code Generation.
+ * "typecomment": Window>Preferences>Java>Templates. To enable and
+ * disable the creation of type comments go to
+ * Window>Preferences>Java>Code Generation.
  */
-public class ConsultPredicate extends GroundLiteral
-{
-    private final static Logger logger = Logger.getLogger( ConsultPredicate.class );
+public class ConsultPredicate extends GroundLiteral {
+    private final static Logger logger = Logger.getLogger(ConsultPredicate.class);
 
-    public ConsultPredicate( Database database )
-    {
-        this( database, "consult", 1 );
+    public ConsultPredicate(Database database) {
+        this(database, "consult", 1);
     }
 
-    public ConsultPredicate( Database database, String name, int arity )
-    {
-        super( database, name, arity );
+    public ConsultPredicate(Database database, String name, int arity) {
+        super(database, name, arity);
         assert arity == 1;
     }
 
@@ -63,36 +54,24 @@ public class ConsultPredicate extends GroundLiteral
      * @see com.kajabity.prolog.core.environment.GroundLiteral#execute(com.kajabity.prolog.core.environment.PrologDatabase,
      *      com.kajabity.prolog.io.solver.Goal)
      */
-    protected List<Variable> execute( Goal goal ) throws TokenException, IOException, PrologException
-    {
-        logger.debug( "CONSULT: " + goal.getTerm() );
+    protected List<Variable> execute(Goal goal) throws TokenException, IOException, PrologException {
+        logger.debug("CONSULT: " + goal.getTerm());
 
-        if( goal.getTerm() instanceof Tuple )
-        {
+        if (goal.getTerm() instanceof Tuple) {
             Tuple tuple = (Tuple) goal.getTerm();
             List<Expression> args = tuple.getArgs().getTerms();
 
-            Expression p1 = args.get( 0 );
+            Expression p1 = args.get(0);
 
-            logger.debug( "CONSULT: " + p1 + " - tag " + ((Term) p1).getTag() );
+            logger.debug("CONSULT: " + p1 + " - tag " + ((Term) p1).getTag());
 
-            if( p1.isTerm() && ((Term) p1).getTag() == Term.TAG_ATOM )
-            {
+            if (p1.isTerm() && ((Term) p1).getTag() == Term.TAG_ATOM) {
                 String filename = ((Atom) p1).getName();
+                database.getCurrentOutputStream().println("Consulting [" + filename + "].");
 
-                URL url = getClass().getResource( filename );
-                if( url == null )
-                {
-                    logger.debug( "Failed to find " + filename );
-                }
-                else
-                {
-                    database.getCurrentOutputStream().println( "Consulting [" + filename + "]." );
+                Prolog.consult(database, filename);
 
-                    Prolog.consult( url, database );
-
-                    return Collections.emptyList();
-                }
+                return Collections.emptyList();
             }
         }
 
