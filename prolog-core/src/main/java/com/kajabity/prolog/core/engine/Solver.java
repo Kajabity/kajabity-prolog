@@ -157,21 +157,12 @@ public class Solver {
     }
 
 
-    public class NoRelationException extends PrologException {
+    public static class NoRelationException extends PrologException {
 
         /**
          *
          */
         private static final long serialVersionUID = 7176036903579308954L;
-
-
-        /**
-         *
-         */
-        public NoRelationException() {
-            super();
-            // TODO Auto-generated constructor stub
-        }
 
 
         /**

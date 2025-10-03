@@ -131,8 +131,8 @@ reverse( [ Head | Tail ], Result ) :-
 	append( Temp, [ Head ], Result ).
 
 
-member( X, [ X | L ] ) :- !.
-member( X, [ Y | L ] ) :- member( X, L ).
+member(X, [X|_]).
+member(X, [_|T]) :- member(X, T).
 
 % ==============================================================================
 % I/O operations

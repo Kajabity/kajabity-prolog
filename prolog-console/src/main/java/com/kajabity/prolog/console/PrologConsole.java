@@ -28,7 +28,8 @@ import com.kajabity.prolog.io.token.Tokeniser;
 import com.kajabity.utils.token.StringTokenSource;
 import com.kajabity.utils.token.TokenException;
 import com.kajabity.utils.token.TokenSource;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
@@ -48,7 +49,7 @@ import java.net.URL;
         description = "Kajabity Prolog",
         versionProvider = PropertiesVersionProvider.class)
 class PrologConsole implements Runnable {
-    private final static Logger logger = Logger.getLogger(PrologConsole.class);
+    private final static Logger logger = LogManager.getLogger(PrologConsole.class);
 
     PrologParser parser = null;
 
@@ -79,7 +80,7 @@ class PrologConsole implements Runnable {
                     Prolog.consult(database, filename);
                 }
             } else {
-                URL initialiseUrl = getClass().getResource("/initialise.pl");
+                URL initialiseUrl = getClass().getResource("/init.pl");
                 if (initialiseUrl == null) {
                     logger.warn("Failed to find initialisation file.");
                 } else {
