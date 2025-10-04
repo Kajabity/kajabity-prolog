@@ -114,9 +114,9 @@ public class SolveProcessor extends Processor
                     if( !v.isAnonymous() )
                     {
                         db.getCurrentOutputStream()
-                                .println(
+                                .print(
                                         "\t" + v.getName() + " = "
-                                                + format.format( v.getFinalInstantiation() ) );
+                                                + format.format( v.getFinalInstantiation() ) + " ");
                     }
                 }
 
@@ -129,7 +129,7 @@ public class SolveProcessor extends Processor
             }
             else
             {
-                db.getCurrentOutputStream().println( ">> yes." );
+                db.getCurrentOutputStream().println( "\n>> yes." );
             }
         }
 
