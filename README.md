@@ -1,21 +1,18 @@
 Kajabity Prolog
 ===============
 
-A Prolog interpreter written in Java just for fun!
+A Prolog interpreter written in Java, created as a learning exercise and to provide code examples for my AI Explained articles.
 
-It isn't intended to compete with any other Prolog implementations, but is rather to be used as a lerning excercise for
-me and to provide code examples for my AI Explained articles on Kajabity.com.
+It isn’t intended to compete with other Prolog implementations, but rather to help explore the fundamentals of logic programming.
 
-It's still a work in progress and will likely be for some time.
+It’s still a work in progress and will likely be for some time. Comments and contributions are welcome!
 
-Comments and contributions are welcome.
-
-Enjoy!
+👉 For project background and in-depth articles, see the [Kajabity Prolog Project Page](https://www.kajabity.com/kajabity-prolog/).
 
 Development
 -----------
 
-The application is built using Apache Maven.  Use the following command to build:
+Build with Apache Maven:
 
 ```shell
     mvn clean package
@@ -23,19 +20,24 @@ The application is built using Apache Maven.  Use the following command to build
 
 This will build all the packages, and create a runnable jar file in the [prolog-console/target](prolog-console/target) directory.
 
-To run the application, use the following command (replacing the path and version as appropriate):
+To run the application, use the following command:
 
 ```shell
-java -jar prolog-console/target/prolog-console-0.1.0-SNAPSHOT.jar
+kajabity-prolog
 ```
+
+This selects between `kajabity-prolog.bat` on windows and `kajabity-prolog.sh` on unix platforms.
+
 
 Command Line Options
 --------------------
 
-I've recently introduced [piccoli](https://picocli.info/) as a command line parser, providing following options:
+I've recently introduced [picocli](https://picocli.info/) as a command line parser, providing following options:
 
 ```text
-$ java -jar prolog-console/target/prolog-console-0.1.0-SNAPSHOT.jar --help
+C:\OSS\Prolog\kajabity-prolog> kajabity-prolog --help
+Running: java --enable-native-access=ALL-UNNAMED -jar "C:\OSS\Prolog\kajabity-prolog\prolog-console\target\prolog-console-0.1.0-SNAPSHOT-shaded.jar" --help
+
 Usage: kajabity-prolog [-hV] [--init=<inits>...]... [--load=<loads>...]...
                        [<mainFile>]
 Kajabity Prolog
@@ -44,54 +46,45 @@ Kajabity Prolog
       --init=<inits>...   Initialization file(s) instead of default.
       --load=<loads>...   Prolog source files to load first.
   -V, --version           Print version information and exit.
+
 ```
 
 Version information can be displayed using the `--version` option, e.g.:
 
 ```text
-$ java -jar prolog-console/target/prolog-console-0.1.0-SNAPSHOT.jar --version
+C:\OSS\Prolog\kajabity-prolog> kajabity-prolog --version
+Running: java --enable-native-access=ALL-UNNAMED -jar "C:\OSS\Prolog\kajabity-prolog\prolog-console\target\prolog-console-0.1.0-SNAPSHOT-shaded.jar" --version
+
 Kajabity Prolog 0.1.0-SNAPSHOT
-Picocli 4.7.7
-JVM: 25 (Eclipse Adoptium OpenJDK 64-Bit Server VM 25+36-LTS)
+JVM: 25 (Oracle Corporation Java HotSpot(TM) 64-Bit Server VM 25+37-LTS-3491)
 OS: Windows 11 10.0 amd64
 ```
 
 When running the application without any arguments, the console will be opened.
 
-```shell
-java -jar prolog-console/target/prolog-console-0.1.0-SNAPSHOT.jar
-```
-
 For example:
 ```text
-C:\OSS\Prolog\kajabity-prolog>java -jar prolog-console/target/prolog-console-0.1.0-SNAPSHOT.jar
->> yes.y Prolog.  Enter "quit." to exit.
-Oct 03, 2025 3:28:39 PM org.jline.utils.Log logr
-WARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
-Prolog> ?- member(A, [apple, banana, cherry]).
-        A = apple
-;
-        A = banana
-;
-        A = cherry
-;
->> no.
+C:\OSS\Prolog\kajabity-prolog>kajabity-prolog
+Running: java --enable-native-access=ALL-UNNAMED -jar "C:\OSS\Prolog\kajabity-prolog\prolog-console\target\prolog-console-0.1.0-SNAPSHOT-shaded.jar"
+
+Kajabity Prolog.  Enter "quit." to exit.
+>> yes.
 Prolog> quit.
 Bye.
+
 ```
 
 Alternatively, you can load a single Prolog file by passing it as an argument:
 ```text
-C:\OSS\Prolog\kajabity-prolog>java -jar prolog-console/target/prolog-console-0.1.0-SNAPSHOT.jar samples\royal_family.pl
->> yes.y Prolog.  Enter "quit." to exit.
+C:\OSS\Prolog\kajabity-prolog>kajabity-prolog samples\royal_family.pl
+Running: java --enable-native-access=ALL-UNNAMED -jar "C:\OSS\Prolog\kajabity-prolog\prolog-console\target\prolog-console-0.1.0-SNAPSHOT-shaded.jar" samples\royal_family.pl
+
+Kajabity Prolog.  Enter "quit." to exit.
+>> yes.
 Loaded: C:\OSS\Prolog\kajabity-prolog\samples\royal_family.pl
-Oct 03, 2025 3:38:55 PM org.jline.utils.Log logr
-WARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
 Prolog> ?- parent(charles, Child).
-        Child = william
-;
-        Child = harry
-;
+        Child = william ;
+        Child = harry ;
 >> no.
 Prolog> quit.
 Bye.
@@ -101,20 +94,13 @@ You can also load multiple files using the `--load` option.
 
 Initialisation
 --------------
-
-Kajabity Prolog loads a number of built-in predicates implemented in Java from the [prolog-builtin](./prolog-builtin)
-package.
-
-It also adds a number of additonal predicates and operator definitions from
-[prolog-io/src/main/resources/init.pl](prolog-io/src/main/resources/init.pl).
-
-You can override these by providing your own initialisation files using the `--init` option.
+* Built-in predicates: from [prolog-builtin](prolog-builtin) package.
+* Default init: [prolog-io/src/main/resources/init.pl](prolog-io/src/main/resources/init.pl).
+* Override with `--init`.
 
 Contribution
 ------------
 
-Contributions are welcome!  Please fork the repository and submit a pull request.
+Contributions are welcome! Please fork and submit a pull request.
 
-As you can see, this is a work in progress.
-
-Like a garden, there is always something to prune, or new things to grow.
+Like a garden, there is always something to prune, or new things to grow. 🌱
