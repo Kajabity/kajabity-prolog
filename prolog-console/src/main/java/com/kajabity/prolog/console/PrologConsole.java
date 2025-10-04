@@ -117,6 +117,7 @@ class PrologConsole implements Runnable {
     private void terminal(Database database) throws IOException {
         Terminal terminal = TerminalBuilder.builder()
                 .system(true)
+                .dumb(true) // fallback if system terminal fails
                 .build();
 
         LineReader reader = LineReaderBuilder.builder()
@@ -138,7 +139,7 @@ class PrologConsole implements Runnable {
                 break;
             }
 
-            logger.debug("Read: [" + line + "]");
+            logger.debug("Read: [{}]", line);
 
             TokenSource source = new StringTokenSource(line);
             Tokeniser t = new Tokeniser(source);
@@ -152,7 +153,7 @@ class PrologConsole implements Runnable {
                     Expression expr = parser.getExpression();
                     parser.reset();
 
-                    logger.debug("==> Parsed " + expr + ".");
+                    logger.debug("==> Parsed {}.", expr);
 
                     //  Handle the parsed statement.
                     Prolog.processTerm(database, (Term) expr);
@@ -170,10 +171,8 @@ class PrologConsole implements Runnable {
         database.getCurrentOutputStream().println("Bye.");
     }
 
-
     public static void main(String[] args) {
         int exitCode = new CommandLine(new PrologConsole()).execute(args);
-        //        System.console().
         System.exit(exitCode);
     }
 }

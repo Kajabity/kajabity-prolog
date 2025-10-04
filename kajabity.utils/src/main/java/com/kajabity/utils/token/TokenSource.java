@@ -20,34 +20,11 @@ package com.kajabity.utils.token;
 import java.io.IOException;
 
 /**
- * @author Simon
- *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * Defines the interface for a source of characters for tokens.
  */
-public interface TokenSource
-{
-	/**
-	 * @return
-	 */
-	public abstract int read() throws IOException;
-
-
-	/**
-	 * @return
-	 */
-	public abstract int peek() throws IOException;
-
-
-	/**
-	 * @param i
-	 * @return
-	 */
-	public abstract int peek( int offset ) throws IOException;
-
-
-	/**
-	 * @return
-	 */
-	public abstract int getLineNumber();
+public interface TokenSource {
+    int read() throws IOException;
+    int peek() throws IOException;
+    int peek(int offset) throws IOException;
+    int getLineNumber();
 }

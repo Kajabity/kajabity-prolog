@@ -22,28 +22,26 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * @author Simon
+ * Read tokens from an input stream.
  */
-public class InputStreamTokenSource implements TokenSource
-{
-    private InputStream stream;
+public class InputStreamTokenSource implements TokenSource {
+    private final InputStream stream;
 
-    private boolean     eof        = false;
+    private boolean eof = false;
 
-    private byte[]      buffer     = new byte[ 1024 ];
+    private final byte[] buffer = new byte[1024];
 
-    private int         available  = 0;
+    private int available = 0;
 
-    private int         pos        = 0;
+    private int pos = 0;
 
-    private int         lineNumber = 1;
+    private int lineNumber = 1;
 
 
     /**
      * @param inputStream
      */
-    public InputStreamTokenSource( InputStream inputStream )
-    {
+    public InputStreamTokenSource(InputStream inputStream) {
         this.stream = inputStream;
     }
 
@@ -52,27 +50,22 @@ public class InputStreamTokenSource implements TokenSource
      * @return
      * @throws IOException
      */
-    public int read() throws IOException
-    {
-        if( available == 0 )
-        {
+    public int read() throws IOException {
+        if (available == 0) {
             fill();
         }
 
-        if( available == 0 )
-        {
+        if (available == 0) {
             return -1;
         }
 
-        int ch = buffer[ pos++ ];
+        int ch = buffer[pos++];
         available--;
-        if( pos >= buffer.length )
-        {
+        if (pos >= buffer.length) {
             pos = 0;
         }
 
-        if( ch == '\n' )
-        {
+        if (ch == '\n') {
             lineNumber++;
         }
 
@@ -84,20 +77,17 @@ public class InputStreamTokenSource implements TokenSource
      * @return
      * @throws IOException
      */
-    public int peek() throws IOException
-    {
+    public int peek() throws IOException {
 
-        if( available <= 0 )
-        {
+        if (available <= 0) {
             fill();
         }
 
-        if( available <= 0 )
-        {
+        if (available <= 0) {
             return -1;
         }
 
-        return buffer[ pos ];
+        return buffer[pos];
     }
 
 
@@ -106,32 +96,27 @@ public class InputStreamTokenSource implements TokenSource
      * @return
      * @throws IOException
      */
-    public int peek( int offset ) throws IOException
-    {
-        if( offset < 0 || offset >= buffer.length )
-        {
-            throw new IOException( "Peek out of range: offset " + offset );
+    public int peek(int offset) throws IOException {
+        if (offset < 0 || offset >= buffer.length) {
+            throw new IOException("Peek out of range: offset " + offset);
         }
 
-        if( available <= offset )
-        {
+        if (available <= offset) {
             fill();
         }
 
-        if( available <= offset )
-        {
+        if (available <= offset) {
             return -1;
         }
 
-        return buffer[ (pos + offset) % buffer.length ];
+        return buffer[(pos + offset) % buffer.length];
     }
 
 
     /**
      * @return
      */
-    public int getLineNumber()
-    {
+    public int getLineNumber() {
         return lineNumber;
     }
 
@@ -142,28 +127,20 @@ public class InputStreamTokenSource implements TokenSource
      *
      * @throws IOException
      */
-    private void fill() throws IOException
-    {
-        if( !eof )
-        {
+    private void fill() throws IOException {
+        if (!eof) {
             int fillPos = (pos + available) % buffer.length;
             int fillSize;
-            if( fillPos < pos )
-            {
+            if (fillPos < pos) {
                 fillSize = pos - fillPos;
-            }
-            else
-            {
+            } else {
                 fillSize = buffer.length - fillPos;
             }
 
-            int count = stream.read( buffer, fillPos, fillSize );
-            if( count == -1 )
-            {
+            int count = stream.read(buffer, fillPos, fillSize);
+            if (count == -1) {
                 eof = true;
-            }
-            else
-            {
+            } else {
                 available += count;
             }
         }

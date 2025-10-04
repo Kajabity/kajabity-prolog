@@ -21,85 +21,54 @@ import java.io.IOException;
 
 
 /**
- * DOCUMENT ME!
- *
- * @author Simon To change the template for this generated type comment go to
- *         Window - Preferences - Java - Code Generation - Code and Comments
+ * Read tokens from a string.
  */
 public class StringTokenSource
-    implements TokenSource
-{
-    private byte [] bytes;
-    private int     position;
-    private int     lineNumber;
+        implements TokenSource {
+    private final byte[] bytes;
+    private int position;
+    private int lineNumber;
 
-    public StringTokenSource( String source )
-    {
-        this.bytes     = source.getBytes(  );
-        position       = 0;
-        lineNumber     = 1;
+    public StringTokenSource(String source) {
+        this.bytes = source.getBytes();
+        position = 0;
+        lineNumber = 1;
     }
 
-    /* (non-Javadoc)
-     * @see uk.co.williams_technologies.token.TokenSource#read()
-     */
-    public int read(  )
-        throws IOException
-    {
-        if( position < bytes.length )
-        {
-            int ch = bytes[ position++ ];
+    public int read()
+            throws IOException {
+        if (position < bytes.length) {
+            int ch = bytes[position++];
 
-            if( ch == '\n' )
-            {
+            if (ch == '\n') {
                 lineNumber++;
             }
 
             return ch;
-        }
-        else
-        {
+        } else {
             return -1;
         }
     }
 
-    /* (non-Javadoc)
-     * @see uk.co.williams_technologies.token.TokenSource#peek()
-     */
-    public int peek(  )
-        throws IOException
-    {
-        if( position < bytes.length )
-        {
-            return bytes[ position ];
-        }
-        else
-        {
+    public int peek()
+            throws IOException {
+        if (position < bytes.length) {
+            return bytes[position];
+        } else {
             return -1;
         }
     }
 
-    /* (non-Javadoc)
-     * @see uk.co.williams_technologies.token.TokenSource#peek(int)
-     */
-    public int peek( int offset )
-        throws IOException
-    {
-        if( position + offset < bytes.length )
-        {
-            return bytes[ position + offset ];
-        }
-        else
-        {
+    public int peek(int offset)
+            throws IOException {
+        if (position + offset < bytes.length) {
+            return bytes[position + offset];
+        } else {
             return -1;
         }
     }
 
-    /* (non-Javadoc)
-     * @see uk.co.williams_technologies.token.TokenSource#getLineNumber()
-     */
-    public int getLineNumber(  )
-    {
+    public int getLineNumber() {
         return lineNumber;
     }
 }

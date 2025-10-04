@@ -19,6 +19,9 @@
 
 package com.kajabity.utils.token;
 
+/**
+ * An exception thrown when a token cannot be read.
+ */
 public class TokenException
     extends Exception
 {

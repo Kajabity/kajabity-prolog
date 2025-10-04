@@ -21,43 +21,34 @@ package com.kajabity.collections;
  * This is a LinkedTree collection class used for holding items in a tree - any node
  * in the tree may have both siblings and children, as well as a parent.
  *
- * @todo add breadth first traversal,
- * @todo add width and depth checks (deepest child and overall width of
- *       descendants) both of which will be recursive.
- * @todo add a Trees class with equivalent methods to the Collections class
- *       (e.g. "unmodifiableTree()").
- * @todo review approach - should I use an interface or use List for children,
- *       or define a 'value' contained in each node (or none?), differentiate
- *       between leaves and branches?
- * @todo Iterators for depth/breadth searches?  Needs to be modifiable (synchronised?).
  * @author Simon J. Williams
+ * @todo add breadth first traversal,
+ * @todo add width and depth checks (deepest child and overall width of descendants) both of which will be recursive.
+ * @todo add a Trees class with equivalent methods to the Collections class (e.g. "unmodifiableTree()").
+ * @todo review approach - should I use an interface or use List for children, or define a 'value' contained in each node (or none?), differentiate between leaves and branches?
+ * @todo Iterators for depth/breadth searches?  Needs to be modifiable (synchronised?).
  */
-public class LinkedTree implements Tree
-{
-    private LinkedTree parent      = null;
+public class LinkedTree implements Tree {
+    private LinkedTree parent = null;
 
     private LinkedTree nextSibling = null;
 
     private LinkedTree prevSibling = null;
 
-    private Tree firstChild  = null;
+    private Tree firstChild = null;
 
-    private LinkedTree lastChild   = null;
+    private LinkedTree lastChild = null;
 
-    private int  size        = 0;
+    private int size = 0;
 
-
-    /* (non-Javadoc)
-     * @see com.kajabity.collections.Tree#add(com.kajabity.collections.LinkedTree)
+    /**
+     * Append a child node to the list of children in this tree node.
+     * @param child a LinkedTree node to append to the children of this tree node.
      */
-    public void add( LinkedTree child )
-    {
-        if( size == 0 )
-        {
+    public void add(LinkedTree child) {
+        if (size == 0) {
             firstChild = lastChild = child;
-        }
-        else
-        {
+        } else {
             lastChild.nextSibling = child;
             child.prevSibling = lastChild;
             lastChild = child;
@@ -67,46 +58,23 @@ public class LinkedTree implements Tree
         size++;
     }
 
-
-    /* (non-Javadoc)
-     * @see com.kajabity.collections.Tree#hasNextSibling()
-     */
-    public boolean hasNextSibling()
-    {
+    public boolean hasNextSibling() {
         return nextSibling != null;
     }
-
-
-    /* (non-Javadoc)
-     * @see com.kajabity.collections.Tree#hasPrevSibling()
-     */
-    public boolean hasPrevSibling()
-    {
+    public boolean hasPrevSibling() {
         return prevSibling != null;
     }
-
-
-    /* (non-Javadoc)
-     * @see com.kajabity.collections.Tree#remove()
-     */
-    public void remove()
-    {
+    public void remove() {
         //  Remove from parent - and siblings.
-        if( prevSibling != null )
-        {
+        if (prevSibling != null) {
             prevSibling.nextSibling = nextSibling;
-        }
-        else
-        {
+        } else {
             parent.firstChild = nextSibling;
         }
 
-        if( nextSibling != null )
-        {
+        if (nextSibling != null) {
             nextSibling.prevSibling = prevSibling;
-        }
-        else
-        {
+        } else {
             parent.lastChild = prevSibling;
         }
 
@@ -115,77 +83,42 @@ public class LinkedTree implements Tree
         parent = null;
     }
 
-
-    /* (non-Javadoc)
-     * @see com.kajabity.collections.Tree#clearChildren()
-     */
-    public void clearChildren()
-    {
-        while( firstChild != null )
-        {
+    public void clearChildren() {
+        while (firstChild != null) {
             firstChild.remove();
         }
     }
 
-
-    /* (non-Javadoc)
-     * @see com.kajabity.collections.Tree#getFirstChild()
-     */
-    public Tree getFirstChild()
-    {
+    public Tree getFirstChild() {
         return firstChild;
     }
 
-
-    /* (non-Javadoc)
-     * @see com.kajabity.collections.Tree#getLastChild()
-     */
-    public Tree getLastChild()
-    {
+    public Tree getLastChild() {
         return lastChild;
     }
 
-
-    /* (non-Javadoc)
-     * @see com.kajabity.collections.Tree#getNextSibling()
-     */
-    public Tree getNextSibling()
-    {
+    public Tree getNextSibling() {
         return nextSibling;
     }
 
-
-    /* (non-Javadoc)
-     * @see com.kajabity.collections.Tree#getParent()
-     */
-    public Tree getParent()
-    {
+    public Tree getParent() {
         return parent;
     }
 
-
-    /* (non-Javadoc)
-     * @see com.kajabity.collections.Tree#getPrevSibling()
-     */
-    public Tree getPrevSibling()
-    {
+    public Tree getPrevSibling() {
         return prevSibling;
     }
 
 
-    public Tree depthNext()
-    {
-        if( firstChild != null )
-        {
+    public Tree depthNext() {
+        if (firstChild != null) {
             return firstChild;
         }
 
         LinkedTree next = this;
-        while( next.nextSibling == null )
-        {
+        while (next.nextSibling == null) {
             next = next.parent;
-            if( next == null )
-            {
+            if (next == null) {
                 return null;
             }
         }
@@ -196,31 +129,21 @@ public class LinkedTree implements Tree
 
     /**
      * Find the previous LinkedTree element based on a depth first traversal.
-     *
-     * @return
      */
-    public Tree depthPrev()
-    {
-        if( prevSibling == null )
-        {
+    public Tree depthPrev() {
+        if (prevSibling == null) {
             return parent;
         }
 
         LinkedTree prev = prevSibling;
-        while( prev.lastChild != null )
-        {
+        while (prev.lastChild != null) {
             prev = prev.lastChild;
         }
 
         return prev;
     }
 
-
-    /* (non-Javadoc)
-     * @see com.kajabity.collections.Tree#getSize()
-     */
-    public int getSize()
-    {
+    public int getSize() {
         return size;
     }
 }

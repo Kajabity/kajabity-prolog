@@ -18,16 +18,15 @@
 
 package com.kajabity.collections;
 
-public interface Tree
-{
+public interface Tree {
 
     /**
      * Add a child node to the end of the list of children in this tree node.
      *
      * @param child a LinkedTree node to add to the end of the children list for this
-     *            tree node.
+     *              tree node.
      */
-    void add( LinkedTree child );
+    void add(LinkedTree child);
 
     /**
      * True if this is not the last sibling within the children of it's parent.
@@ -87,7 +86,7 @@ public interface Tree
 
     /**
      * @return Returns the size of this tree node - the number of immediate
-     *         children.
+     * children.
      */
     int getSize();
 

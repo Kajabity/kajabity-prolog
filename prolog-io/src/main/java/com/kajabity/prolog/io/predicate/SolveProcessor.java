@@ -164,7 +164,7 @@ public class SolveProcessor extends Processor
     private boolean wantMore( PrintStream out, InputStream in )
             throws IOException
     {
-        out.println( "more? " );
+//        out.println( "more? " );
         String line = getLine( in );
         //        logger.debug( "Read: [" + line + "]" );
 

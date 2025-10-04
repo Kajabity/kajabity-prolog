@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Detect platform and delegate
+case "$(uname -s)" in
+    Linux|Darwin|FreeBSD|NetBSD|OpenBSD)
+        exec bash "$(dirname "$0")/kajabity-prolog.sh" "$@"
+        ;;
+    CYGWIN*|MINGW*|MSYS*|Windows_NT)
+        exec cmd.exe /c "$(dirname "$0")\\kajabity-prolog.bat" %*
+        ;;
+    *)
+        echo "Unsupported platform: $(uname -s)"
+        exit 1
+        ;;
+esac

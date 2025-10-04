@@ -34,7 +34,6 @@ public class PropertiesVersionProvider implements IVersionProvider {
                 String version = props.getProperty("application.version", "unknown");
                 return new String[]{
                         "Kajabity Prolog " + version,
-                        "Picocli " + picocli.CommandLine.VERSION,
                         "JVM: ${java.version} (${java.vendor} ${java.vm.name} ${java.vm.version})",
                         "OS: ${os.name} ${os.version} ${os.arch}"};
             }

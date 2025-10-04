@@ -19,114 +19,105 @@
 
 package com.kajabity.utils.token;
 
-public class Token
-{
+/**
+ * A token read from a TokenSource.
+ */
+public class Token {
     private int type = 0;
     private int subType = 0;
 
-    private StringBuffer buf = new StringBuffer();
+    private final StringBuffer buf = new StringBuffer();
 
     private char quote = (char) 0;
     private int line = 0;
     private int offset = 0;
 
-    public Token()
-    {
+    public Token() {
     }
 
 
-    public void reset()
-    {
+    public void reset() {
         type = 0;
         subType = 0;
         quote = (char) 0;
-        buf.setLength( 0 );
+        buf.setLength(0);
         line = 0;
         offset = 0;
     }
 
 
-    public String toString()
-    {
+    public String toString() {
         return buf.toString();
     }
 
 
-    public int getLine()
-    {
+    public int getLine() {
         return line;
     }
 
 
-    public void setLine( int line )
-    {
+    public void setLine(int line) {
         this.line = line;
     }
 
 
-    public int getOffset()
-    {
+    public int getOffset() {
         return offset;
     }
 
 
-    public void setOffset( int offset )
-    {
+    public void setOffset(int offset) {
         this.offset = offset;
     }
 
 
-    public int getType()
-    {
+    public int getType() {
         return type;
     }
 
 
-    public void setType( int type )
-    {
+    public void setType(int type) {
         this.type = type;
     }
+
     /**
      * Returns the quote.
+     *
      * @return char
      */
-    public char getQuote()
-    {
+    public char getQuote() {
         return quote;
     }
 
     /**
      * Sets the quote.
+     *
      * @param quote The quote to set
      */
-    public void setQuote(char quote)
-    {
+    public void setQuote(char quote) {
         this.quote = quote;
     }
 
     /**
      * @return
      */
-    public int getSubType()
-    {
+    public int getSubType() {
         return subType;
     }
 
     /**
      * @param i
      */
-    public void setSubType(int i)
-    {
+    public void setSubType(int i) {
         subType = i;
     }
 
 
-	/**
-	 * @param c
-	 */
-	public void append( char c )
-	{
-        buf.append( c );
-	}
+    /**
+     * @param c
+     */
+    public void append(char c) {
+        buf.append(c);
+    }
 
 }
